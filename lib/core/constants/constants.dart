@@ -4,13 +4,19 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:welfare_fund_admin/core/base/main/main_page_provider.dart';
+import 'package:welfare_fund_admin/core/base/main/main_screen.dart';
 import 'package:welfare_fund_admin/core/constants/palette.dart';
 import 'package:welfare_fund_admin/features/auth/views/change_credentials.dart';
 import 'package:welfare_fund_admin/features/home/views/home_screen.dart';
 import 'package:welfare_fund_admin/features/settings/providers/theme_provider.dart';
 import 'package:welfare_fund_admin/features/transaction/screens/transaction_screen.dart';
 
-final KMainPages = [];
+// ignore: non_constant_identifier_names
+final KMainPages = [
+  const HomeScreen(),
+  const TransactionScreen(),
+];
 
 Color priCol(BuildContext context) {
   return Theme.of(context).colorScheme.primary;
@@ -21,6 +27,7 @@ final Future<SharedPreferences> sharedPrefs = SharedPreferences.getInstance();
 List<SingleChildWidget> multiProviders = [
   
   ChangeNotifierProvider(create: (context) => ThemeProvider()),
+  ChangeNotifierProvider(create: (context) => MainPageProvider()),
   
 ];
 
@@ -54,14 +61,41 @@ SystemUiOverlayStyle mainSystemUiOverlayStyle(BuildContext context) {
 }
 
 Map<String, Widget Function(BuildContext)> routes = {
-  "changeCredentials": (context) => const ChangeCredentials()
+  "changeCredentials": (context) => const ChangeCredentials(),
+  "main": (context) => const MainScreen(),
   
 };
 
 List<Widget> kOnboardPage = [
-  const HomeScreen(),
-  const TransactionScreen(),
+  
  ];
+
+
+ 
+String fullNameController = '';
+String dateOfBirthController = '';
+String dateOfRegistrationController = '';
+String contactController = '';
+String houseNumberController = '';
+String placeOfAbodeController = '';
+String landMarkController = '';
+String homeTownController = '';
+String regionController = '';
+String maritalStatusController = '';
+String nameOfSpouseController = '';
+String lifeStatusController = '';
+String occupationController = '';
+String fatherNameController = '';
+String fatherLifeStatusController = '';
+String motherNameController = '';
+String motherLifeStatusController = '';
+String nextOfKinController = '';
+String nextOfKinContactController = '';
+String classLeaderController = '';
+String classLeaderContactController = '';
+String organizationOfMemberController = '';
+String orgLeaderContactController = '';
+
 
  
 

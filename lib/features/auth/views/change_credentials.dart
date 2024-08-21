@@ -14,6 +14,10 @@ class ChangeCredentials extends StatefulWidget {
 
 class _ChangeCredentialsState extends State<ChangeCredentials> {
   final TextEditingController passwordController = TextEditingController();
+
+  void goToMainScreen() {
+    Navigator.of(context).pushReplacementNamed('main');
+  }
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -47,7 +51,7 @@ class _ChangeCredentialsState extends State<ChangeCredentials> {
                     child: TextInput(passwordController: passwordController)),
                 const SizedBox(height: 20),
                 InkWell(
-                  onTap: (){},
+                  onTap: goToMainScreen,
                   borderRadius: BorderRadius.circular(35),
                   child: Container(
                     width: double.infinity,
