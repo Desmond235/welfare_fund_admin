@@ -11,8 +11,8 @@ class SignInWidget extends StatefulWidget {
     super.key,
     this.isRememberMe,
     this.username,
-    required this.chkOnchanged,
-    required this.onChanged,
+     this.chkOnchanged,
+    this.onChanged,
     required this.passwordController,
     required this.usernameController
   });
@@ -20,8 +20,8 @@ class SignInWidget extends StatefulWidget {
 
   final void Function(String name)? username;
   final bool? isRememberMe;
-  final void Function(String onChanged) onChanged;
-  final void Function(bool? value) chkOnchanged;
+  final void Function(String onChanged)? onChanged;
+  final void Function(bool? value)? chkOnchanged;
   final TextEditingController passwordController;
   final TextEditingController usernameController;
 

@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/features/auth/views/auth.dart';
 
 void main() async{
+   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  // systemNavBarColor;
+
   await dotenv.load(fileName: '.env');
   runApp(MultiProvider(
     providers: multiProviders,
@@ -26,6 +34,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const AuthScreen(),
+      routes: routes,
     );
   }
 }

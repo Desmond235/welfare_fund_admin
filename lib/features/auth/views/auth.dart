@@ -32,7 +32,9 @@ class _AuthScreenState extends State<AuthScreen> {
     if (usernameController.text != EnvironConfig.username ||
         passwordController.text != EnvironConfig.password) {
           snackBar(context, 'Username or password is incorrect');
+          return;
         }
+     Navigator.of(context).pushReplacementNamed('changeCredentials');
   }
 
   @override
