@@ -1,6 +1,7 @@
-import 'package:church_clique/core/constants/palette.dart';
+
 import 'package:flutter/material.dart';
 import 'package:icons_flutter/icons_flutter.dart';
+import 'package:welfare_fund_admin/core/constants/palette.dart';
 
 class DateTimePickerWidget extends StatelessWidget {
   const DateTimePickerWidget({

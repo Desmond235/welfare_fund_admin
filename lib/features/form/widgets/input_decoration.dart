@@ -1,5 +1,6 @@
-import 'package:church_clique/core/constants/palette.dart';
+
 import 'package:flutter/material.dart';
+import 'package:welfare_fund_admin/core/constants/palette.dart';
 
 InputDecoration inputDecoration() {
     return InputDecoration(
