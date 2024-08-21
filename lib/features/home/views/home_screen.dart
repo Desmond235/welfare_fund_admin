@@ -1,6 +1,8 @@
 
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import 'package:welfare_fund_admin/core/components/data_row.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/controls/data_column.dart';
@@ -23,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late Future<List<MembershipModel>> loadMembership;
   MembershipModel? members;
-  late final int _membershipId = 0;
 
   final _formKey = GlobalKey<FormState>();
 
