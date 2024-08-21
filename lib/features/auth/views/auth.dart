@@ -23,6 +23,7 @@ class _AuthScreenState extends State<AuthScreen> {
   String? username;
   bool? isRememberMe;
   final passwordController = TextEditingController();
+  final usernameController = TextEditingController();
   bool _isSending = true;
 
   http.Response? response;
@@ -183,6 +184,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 children: [
                                     SignInWidget(
                                       // FIXME: getTextBefore on inactive input connection issue
+                                      usernameController: usernameController,
                                       passwordController: passwordController,
                                       isRememberMe: isRememberMe,
                                       onChanged: (value) async {

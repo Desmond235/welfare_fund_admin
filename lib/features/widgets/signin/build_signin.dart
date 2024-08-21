@@ -14,6 +14,7 @@ class SignInWidget extends StatefulWidget {
     required this.chkOnchanged,
     required this.onChanged,
     required this.passwordController,
+    required this.usernameController
   });
 
 
@@ -22,6 +23,7 @@ class SignInWidget extends StatefulWidget {
   final void Function(String onChanged) onChanged;
   final void Function(bool? value) chkOnchanged;
   final TextEditingController passwordController;
+  final TextEditingController usernameController;
 
   @override
   State<SignInWidget> createState() => _SignInWidgetState();
@@ -49,7 +51,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                         "LOGIN",
                         style: TextStyle(
                           fontSize: 16,
-                          color:  Palette.textColor1,
+                          color:  Palette.activeColor,
                         ),
                       ),
                         Container(
@@ -60,39 +62,28 @@ class _SignInWidgetState extends State<SignInWidget> {
                     ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                  },
-                  child: Column(
-                    children: [
-                      const Text(
-                        'SIGNUP',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color:  Palette.textColor1,
-                        ),
-                      ),
-                        Container(
-                          height: 5,
-                          width: 55,
-                          color: Colors.orange,
-                        )
-                    ],
-                  ),
-                ),
+                
               ],
             ),
             const SizedBox(height: 20),
             BuildTextInput(
               maxLines: 1,
+              controller: widget.usernameController,
               type: TextInputType.emailAddress,
+              validator: (value){
+                const source = r'\S';
+                if(value == null || value.isEmpty || !RegExp(source).hasMatch(value)){
+
+                }
+                return null;
+              },
               onChanged: widget.onChanged,
               onSaved: (value) {
                 Provider.of<SignInProvider>(context, listen: false)
                     .saveUsername(value!);
               },
               icon: MaterialCommunityIcons.account_outline,
-              hintText: "info@example.com",
+              hintText: "username",
               isEmail: true,
             ),
     
@@ -168,23 +159,8 @@ class _SignInWidgetState extends State<SignInWidget> {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Row(
-                //   children: [
-                //     Checkbox(
-                //       tristate: false,
-                //       value: widget.isRememberMe ?? false,
-                //       activeColor: Palette.textColor2,
-                //       onChanged: widget.chkOnchanged,
-                //     ),
-                //     const Text(
-                //       "Remember me",
-                //       style:
-                //           TextStyle(fontSize: 12, color: Palette.textColor1),
-                //     ),
-                //   ],
-                // ),
                 TextButton(
                   onPressed: () {},
                   child: const Text("Forgot Password?",
