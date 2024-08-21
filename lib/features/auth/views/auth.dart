@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:http/http.dart' as http;
 import 'package:welfare_fund_admin/core/components/dialog_box.dart';
+import 'package:welfare_fund_admin/core/config/environ_config.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/constants/palette.dart';
+import 'package:welfare_fund_admin/core/controls/snackbar.dart';
 import 'package:welfare_fund_admin/features/widgets/signin/build_signin.dart';
 import 'package:welfare_fund_admin/features/widgets/signin/submit_button.dart';
 
@@ -24,14 +26,13 @@ class _AuthScreenState extends State<AuthScreen> {
   bool? isRememberMe;
   final passwordController = TextEditingController();
   final usernameController = TextEditingController();
-  bool _isSending = true;
+  final bool _isSending = true;
 
-  http.Response? response;
-
- 
-  @override
-  void initState() {
-    super.initState();
+   login() {
+    if (usernameController.text != EnvironConfig.username ||
+        passwordController.text != EnvironConfig.password) {
+          snackBar(context, 'Username or password is incorrect');
+        }
   }
 
   @override
@@ -39,30 +40,7 @@ class _AuthScreenState extends State<AuthScreen> {
     super.dispose();
     passwordController.dispose();
   }
-// this function allows users to pick an image
-// and enter the enter their registration credentials
-// if the user does not pick an image, he or she will be prompted to pick an image
-// if the user enters a wrong or does or does not enter any information, the user will be prompted to do so
 
-  post() {}
- 
-  
-  void addCredentials() {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-    if (pickedImageFile == null) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Please pick an image"),
-      ));
-    }
-
-    _formKey.currentState!.save();
-
-
-    // Navigator.of(context).pushReplacementNamed('main');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +121,6 @@ class _AuthScreenState extends State<AuthScreen> {
                                           ),
                                         ),
                                         const SizedBox(height: 6),
-                                       
                                       ],
                                     ),
                                   ),
@@ -182,30 +159,29 @@ class _AuthScreenState extends State<AuthScreen> {
                               ),
                               child: Column(
                                 children: [
-                                    SignInWidget(
-                                      // FIXME: getTextBefore on inactive input connection issue
-                                      usernameController: usernameController,
-                                      passwordController: passwordController,
-                                      isRememberMe: isRememberMe,
-                                      onChanged: (value) async {
-                                        setState(() {
-                                          username = value;
-                                        });
-                                      },
-                                      chkOnchanged: (value) async {
-                                        setState(() {
-                                          isRememberMe = value!;
-                                        });
-                                      },
-                                    ),
+                                  SignInWidget(
+                                    // FIXME: getTextBefore on inactive input connection issue
+                                    usernameController: usernameController,
+                                    passwordController: passwordController,
+                                    isRememberMe: isRememberMe,
+                                    onChanged: (value) async {
+                                      setState(() {
+                                        username = value;
+                                      });
+                                    },
+                                    chkOnchanged: (value) async {
+                                      setState(() {
+                                        isRememberMe = value!;
+                                      });
+                                    },
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                           SubmitButton(
                             isSending: _isSending,
-                            onTap: () async {
-                            },
+                            onTap: login,
                             isShadow: false,
                           )
                         ],

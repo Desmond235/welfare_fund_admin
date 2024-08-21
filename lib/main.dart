@@ -5,7 +5,7 @@ import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/features/auth/views/auth.dart';
 
 void main() async{
-  await dotenv.load();
+  await dotenv.load(fileName: '.env');
   runApp(MultiProvider(
     providers: multiProviders,
     child: const MyApp(),
