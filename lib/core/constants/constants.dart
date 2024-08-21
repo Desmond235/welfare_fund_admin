@@ -6,7 +6,9 @@ import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:welfare_fund_admin/core/constants/palette.dart';
 import 'package:welfare_fund_admin/features/auth/views/change_credentials.dart';
+import 'package:welfare_fund_admin/features/home/views/home_screen.dart';
 import 'package:welfare_fund_admin/features/settings/providers/theme_provider.dart';
+import 'package:welfare_fund_admin/features/transaction/screens/transaction_screen.dart';
 
 final KMainPages = [];
 
@@ -57,6 +59,8 @@ Map<String, Widget Function(BuildContext)> routes = {
 };
 
 List<Widget> kOnboardPage = [
+  const HomeScreen(),
+  const TransactionScreen(),
  ];
 
  
