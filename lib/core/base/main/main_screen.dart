@@ -16,7 +16,7 @@ class MainScreen extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              pageState.currentPage == 1 ? "Home" : "Transactions",
+              pageState.currentPage == 0 ? "Home" : "Transactions",
             ),
           ),
           body: KMainPages[pageState.currentPage],

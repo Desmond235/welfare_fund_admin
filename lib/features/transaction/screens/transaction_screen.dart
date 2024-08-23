@@ -57,7 +57,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   void downloadReport(List<TransactionModel> members, DateTime? selectedDate){
     if(selectedDate != null) {
       final filteredTransactions = filterTransactionsByMonth(members, selectedDate);
-      generatePdfReport(filteredTransactions, selectedDate, context);
+      generatePdfReport(filteredTransactions, selectedDate);
     }else{
       snackBar(context, 'Please select a month first');
       return;
@@ -125,9 +125,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       ),
                       IconButton(
                         tooltip: 'Download',
-                        onPressed: () async{
-                          final report = downloadReport(members, _selectedDate);
-                        },
+                        onPressed: () => downloadReport(members, _selectedDate),
                         icon: const Icon(Icons.download, size: 30),
                       )
                     ],
