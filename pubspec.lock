@@ -481,6 +481,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.19.0"
+  js:
+    dependency: transitive
+    description:
+      name: js
+      sha256: f2c445dce49627136094980615a031419f7f3eb393237e4ecd97ac15dea343f3
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.7"
   json_annotation:
     dependency: transitive
     description:
@@ -601,6 +609,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.2"
+  open_filex:
+    dependency: "direct main"
+    description:
+      name: open_filex
+      sha256: ba425ea49affd0a98a234aa9344b9ea5d4c4f7625a1377961eae9fe194c3d523
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.5.0"
   path:
     dependency: transitive
     description:
@@ -618,7 +634,7 @@ packages:
     source: hosted
     version: "1.0.1"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: fec0d61223fba3154d87759e3cc27fe2c8dc498f6386c6d6fc80d1afdd1bf378
@@ -673,6 +689,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.11.1"
+  pdf_render:
+    dependency: "direct main"
+    description:
+      name: pdf_render
+      sha256: "51b588a5e52e416a4f7fe5c8d9842b13edb234508d5572d574e7a7c37ea09d95"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.10"
   petitparser:
     dependency: transitive
     description:

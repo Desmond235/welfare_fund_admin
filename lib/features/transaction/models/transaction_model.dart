@@ -1,8 +1,8 @@
 class TransactionModel {
   final int id;
-  final double amount;
+  final int amount;
   final String email;
-  final DateTime date;
+  final String date;
 
   TransactionModel({
     required this.id,
@@ -16,7 +16,7 @@ class TransactionModel {
       id: json['id'] ?? 0,
       amount: json['amount'] ?? 0,
       email: json['email'] ?? "",
-      date: json['date'] as DateTime,
+      date: json['date'] ?? '',
     );
   }
 }
