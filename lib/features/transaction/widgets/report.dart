@@ -19,11 +19,12 @@ Future<List<TransactionModel>> fetchAllTransactions() async {
 List<TransactionModel> filterTransactionsByMonth(
     List<TransactionModel> transactions, DateTime? selectedDate) {
 
-  final dateFormat = DateFormat.yMd();
+  final dateFormat = DateFormat('yyyy-MM-dd');
   if (selectedDate == null) return transactions;
   try {
     return transactions.where((transaction) {
       print('transaction date: ${transaction.date}');
+
     final transactionDate = dateFormat.parse(transaction.date.toString());
     return transactionDate.month == selectedDate.month &&
         transactionDate.year == selectedDate.year;
@@ -54,6 +55,8 @@ Future<void> generatePdfReport(List<TransactionModel> transactions,
   final formattedDate = DateFormat.yMMMM();
 
   final imageAsBytes = await rootBundle.load('assets/images/methodist.png');
+  final font = pw.Font.ttf(await rootBundle.load('assets/fonts/Roboto-Regular.ttf'));
+
   final image = pw.MemoryImage(
     imageAsBytes.buffer.asUint8List(),
   );
@@ -77,14 +80,15 @@ Future<void> generatePdfReport(List<TransactionModel> transactions,
             style: const pw.TextStyle(fontSize: 24),
           ),
           pw.SizedBox(height: 10),
-          pw.Text('The Methodist Church Ghana'),
+          pw.Text('The Methodist Church Ghana', style: pw.TextStyle(font: font)),
           pw.Image(image),
-          pw.Text('Ebenezer Cathedral- Winneba'),
-          pw.Text('Winneba Ebenezer Methodist cathedral Welfare'),
+          pw.Text('Ebenezer Cathedral- Winneba', style: pw.TextStyle(font: font)),
+          pw.Text('Winneba Ebenezer Methodist cathedral Welfare', style: pw.TextStyle(font: font)),
           pw.SizedBox(height: 15),
           pw.TableHelper.fromTextArray(
               context: context,
               headers: const ['Id', 'Email', 'Amount', 'Date'],
+              headerStyle: pw.TextStyle(font: font),
               data: [
                 ...transactions.map((transaction) {
                   return [
@@ -103,6 +107,7 @@ Future<void> generatePdfReport(List<TransactionModel> transactions,
                 3: pw.Alignment.centerLeft,
               },
               cellStyle: pw.TextStyle(
+                font: font,
                 fontSize: 14,
                 fontWeight: pw.FontWeight.normal,
               ))
