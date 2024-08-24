@@ -3,6 +3,7 @@ import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/controls/data_column.dart';
 import 'package:welfare_fund_admin/features/form/models/membership_model.dart';
 import 'package:welfare_fund_admin/features/form/service/form_service.dart';
+import 'package:welfare_fund_admin/features/home/widgets/report.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,22 +13,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  
   int _currentSortIndex = 0;
   bool _isSortAsc = true;
 
   late Future<List<MembershipModel>> loadMembership;
   MembershipModel? members;
-  
+
   final _formKey = GlobalKey<FormState>();
   late int userId;
 
   int _pageSize = 10;
 
-
   void updateMembers(int id) {
     _formKey.currentState!.save();
-
   }
 
   @override
@@ -37,9 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<List<MembershipModel>> loadMembers() async {
-    final membership =
-        await FormServiceResponse.getMembershipDetails();
-    return  membership;
+    final membership = await FormServiceResponse.getMembershipDetails();
+    return membership;
   }
 
   @override
@@ -69,39 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Theme(
-                      data: theme.copyWith(
-                        iconTheme:
-                            theme.iconTheme.copyWith(color: Colors.white),
-                      ),
-                      child: Container(
-                        margin: const EdgeInsets.only(top: 20),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Form(
-                            key: _formKey,
-                            child: PaginatedDataTable(
-                              source: _DataSource(members: members),
-                              rowsPerPage: _pageSize,
-                              availableRowsPerPage: const [10, 15, 25],
-                               onRowsPerPageChanged: (value){
-                                setState(() {
-                                  _pageSize = value!;
-                                });
-                               },
-                              headingRowColor:
-                                  WidgetStateProperty.resolveWith(
-                                      (states) => priCol(context)),
-                              showCheckboxColumn: true,
-                              sortColumnIndex: _currentSortIndex,
-                              sortAscending: _isSortAsc,
-                              columns: getDataColumns(members),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -122,7 +86,45 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
+                         IconButton(
+                          onPressed: () => generatePdfReportForMembers(members),
+                          icon: const Icon(
+                            Icons.download,
+                            size: 30,
+                          ),
+                        ),
                       ],
+                    ),
+                    Theme(
+                      data: theme.copyWith(
+                        iconTheme:
+                            theme.iconTheme.copyWith(color: Colors.white),
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Form(
+                            key: _formKey,
+                            child: PaginatedDataTable(
+                              source: _DataSource(members: members),
+                              rowsPerPage: _pageSize,
+                              availableRowsPerPage: const [10, 15, 25],
+                              onRowsPerPageChanged: (value) {
+                                setState(() {
+                                  _pageSize = value!;
+                                });
+                              },
+                              headingRowColor: WidgetStateProperty.resolveWith(
+                                  (states) => priCol(context)),
+                              showCheckboxColumn: true,
+                              sortColumnIndex: _currentSortIndex,
+                              sortAscending: _isSortAsc,
+                              columns: getDataColumns(members),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 );
@@ -175,9 +177,11 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             _currentSortIndex = columnIndex;
             if (_isSortAsc) {
-              members.sort((a, b) => b.date_of_birth.compareTo(a.date_of_birth));
+              members
+                  .sort((a, b) => b.date_of_birth.compareTo(a.date_of_birth));
             } else {
-              members.sort((a, b) => a.date_of_birth.compareTo(b.date_of_birth));
+              members
+                  .sort((a, b) => a.date_of_birth.compareTo(b.date_of_birth));
             }
             _isSortAsc = !_isSortAsc;
           });
@@ -192,12 +196,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class _DataSource extends DataTableSource{
-  List<MembershipModel> members ;
+class _DataSource extends DataTableSource {
+  List<MembershipModel> members;
   _DataSource({required this.members});
   @override
   DataRow? getRow(int index) {
-    if(index >= members.length){
+    if (index >= members.length) {
       return null;
     }
     final item = members[index];
@@ -237,5 +241,4 @@ class _DataSource extends DataTableSource{
 
   @override
   int get selectedRowCount => 0;
-
 }

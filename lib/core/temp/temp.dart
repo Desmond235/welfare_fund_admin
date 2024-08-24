@@ -167,3 +167,24 @@
   //     ],
   //   );
   // }
+
+   // DataRow getRows(TransactionModel item) {
+  //   return DataRow(
+  //     cells: [
+  //       createTitleCell(item.id.toString(), _isEditMode, onSaved: (value) {
+  //         fullNameController = value!;
+  //         print(fullNameController);
+  //       }),
+  //       createTitleCell(item.email.toString(), _isEditMode, onSaved: (value) {
+  //         dateOfBirthController = value!;
+  //         print(dateOfBirthController);
+  //       }),
+  //       createTitleCell(item.amount.toString(), _isEditMode, onSaved: (value) {
+  //         dateOfRegistrationController = value!;
+  //       }),
+  //       createTitleCell(item.date.toString(), _isEditMode, onSaved: (value) {
+  //         contactController = value!;
+  //       }),
+  //     ],
+  //   );
+  // }

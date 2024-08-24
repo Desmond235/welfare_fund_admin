@@ -25,7 +25,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   late Future<List<TransactionModel>> loadMembership;
   final _formKey = GlobalKey<FormState>();
 
-  final int _currentPage = 1;
+   int _currentPage = 1;
   int _rowSize = 10;
   DateTime? _selectedDate;
 
@@ -141,6 +141,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         child: PaginatedDataTable(
                           rowsPerPage: _rowSize,
                           availableRowsPerPage: const [10, 20, 30],
+                          initialFirstRowIndex: _currentPage ,
+                          onPageChanged: (value){
+                            _currentPage = value;
+                          },
                           onRowsPerPageChanged: (value) {
                             setState(() {
                               _rowSize = value!;
@@ -182,27 +186,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
           : null,
     );
   }
-
-  // DataRow getRows(TransactionModel item) {
-  //   return DataRow(
-  //     cells: [
-  //       createTitleCell(item.id.toString(), _isEditMode, onSaved: (value) {
-  //         fullNameController = value!;
-  //         print(fullNameController);
-  //       }),
-  //       createTitleCell(item.email.toString(), _isEditMode, onSaved: (value) {
-  //         dateOfBirthController = value!;
-  //         print(dateOfBirthController);
-  //       }),
-  //       createTitleCell(item.amount.toString(), _isEditMode, onSaved: (value) {
-  //         dateOfRegistrationController = value!;
-  //       }),
-  //       createTitleCell(item.date.toString(), _isEditMode, onSaved: (value) {
-  //         contactController = value!;
-  //       }),
-  //     ],
-  //   );
-  // }
 
   List<DataColumn> getDataColumns(List<TransactionModel> members) {
     return [
