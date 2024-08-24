@@ -3,6 +3,7 @@ import 'package:icons_flutter/icons_flutter.dart';
 import 'package:welfare_fund_admin/core/components/dialog_box.dart';
 import 'package:welfare_fund_admin/core/components/input_control.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
+import 'package:welfare_fund_admin/core/service/update_credentials.dart';
 import 'package:welfare_fund_admin/features/auth/widgets/text_input.dart';
 
 class ChangeCredentials extends StatefulWidget {
@@ -14,17 +15,30 @@ class ChangeCredentials extends StatefulWidget {
 
 class _ChangeCredentialsState extends State<ChangeCredentials> {
   final TextEditingController passwordController = TextEditingController();
+  final usernameController = TextEditingController();
 
-  void goToMainScreen() {
-    Navigator.of(context).pushReplacementNamed('main');
+  void updateCredentials() {
+    UpdateCredentialsResponse.post(
+      usernameController.text,
+      passwordController.text,
+      context,
+    );
   }
+
+   @override
+    void dispose() {
+      super.dispose();
+        usernameController.dispose();
+        passwordController.dispose();
+    }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
-    canPop: false,
-    onPopInvokedWithResult: (value, result) {
-      dialogBox(context);
-    },
+      canPop: false,
+      onPopInvokedWithResult: (value, result) {
+        dialogBox(context);
+      },
       child: Scaffold(
         body: SafeArea(
           child: Padding(
@@ -34,14 +48,12 @@ class _ChangeCredentialsState extends State<ChangeCredentials> {
               children: [
                 Text(
                   "Change your username and password",
-                  style: TextStyle(
-                    color: priCol(context),
-                    fontSize: 16
-                  ),
+                  style: TextStyle(color: priCol(context), fontSize: 16),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 20),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
                   child: BuildTextInput(
+                    controller: usernameController,
                     hintText: 'username',
                     icon: MaterialCommunityIcons.account_outline,
                   ),
@@ -51,18 +63,21 @@ class _ChangeCredentialsState extends State<ChangeCredentials> {
                     child: TextInput(passwordController: passwordController)),
                 const SizedBox(height: 20),
                 InkWell(
-                  onTap: goToMainScreen,
+                  onTap: updateCredentials,
                   borderRadius: BorderRadius.circular(35),
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(35),
+                        borderRadius: BorderRadius.circular(35),
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomLeft,
-                      colors: [priCol(context).withOpacity(0.6), priCol(context)],
-                    )),
+                          colors: [
+                            priCol(context).withOpacity(0.6),
+                            priCol(context)
+                          ],
+                        )),
                     child: const Text(
                       'Save',
                       textAlign: TextAlign.center,

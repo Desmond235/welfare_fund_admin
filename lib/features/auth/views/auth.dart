@@ -9,6 +9,7 @@ import 'package:welfare_fund_admin/core/config/environ_config.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/constants/palette.dart';
 import 'package:welfare_fund_admin/core/controls/snackbar.dart';
+import 'package:welfare_fund_admin/core/service/verify_login.dart';
 import 'package:welfare_fund_admin/features/widgets/signin/build_signin.dart';
 import 'package:welfare_fund_admin/features/widgets/signin/submit_button.dart';
 
@@ -22,27 +23,26 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final _formKey = GlobalKey<FormState>();
   File? pickedImageFile;
-  String? username;
   bool? isRememberMe;
   final passwordController = TextEditingController();
   final usernameController = TextEditingController();
   final bool _isSending = true;
 
-   login() {
-    if (usernameController.text != EnvironConfig.username ||
-        passwordController.text != EnvironConfig.password) {
-          snackBar(context, 'Username or password is incorrect');
-          return;
-        }
-     Navigator.of(context).pushReplacementNamed('changeCredentials');
+  login() {
+    VerifyLogin.post(
+      usernameController.text,
+      passwordController.text,
+      context,
+    );
+    Navigator.of(context).pushReplacementNamed('changeCredentials');
   }
 
   @override
   void dispose() {
     super.dispose();
     passwordController.dispose();
+    usernameController.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -166,11 +166,6 @@ class _AuthScreenState extends State<AuthScreen> {
                                     usernameController: usernameController,
                                     passwordController: passwordController,
                                     isRememberMe: isRememberMe,
-                                    onChanged: (value) async {
-                                      setState(() {
-                                        username = value;
-                                      });
-                                    },
                                     chkOnchanged: (value) async {
                                       setState(() {
                                         isRememberMe = value!;
