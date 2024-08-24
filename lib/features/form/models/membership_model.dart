@@ -83,10 +83,10 @@ class MembershipModel {
       region: json['region'] ?? '',
       marital_status: json['marital_status'] ?? '',
       others: json['others'] ?? '',
-      name_of_spouse: json['name_of_spouse'],
-      life_status: json['life_status'],
+      name_of_spouse: json['name_of_spouse'] ?? 'N/A',
+      life_status: json['life_status'] ?? 'N/A',
       no_of_children: json['no_of_children'] ?? 0,
-      names_of_children: json['names_of_children'],
+      names_of_children: json['names_of_children'] ?? 'N/A',
       occupation: json['occupation'] ?? '' ,
       fathers_name: json['fathers_name'] ?? '',
       father_life_status: json['father_life_status'] ?? '',
@@ -96,7 +96,7 @@ class MembershipModel {
       next_of_kin_contact: json['next_of_kin_contact'] ?? 0,
       class_leader: json['class_leader'] ?? '',
       class_leader_contact: json['class_leader_contact'] ?? 0,
-      organization_of_member: json['organization_of_member'],
+      organization_of_member: json['organization_of_member'] ?? 'N/A',
       org_leader_contact: json['org_leader_contact'],
     );
   }
