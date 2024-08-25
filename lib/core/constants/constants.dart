@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:welfare_fund_admin/core/base/main/main_page_provider.dart';
 import 'package:welfare_fund_admin/core/base/main/main_screen.dart';
 import 'package:welfare_fund_admin/core/constants/palette.dart';
+import 'package:welfare_fund_admin/features/auth/providers/change_credentials_provider.dart';
 import 'package:welfare_fund_admin/features/auth/views/change_credentials.dart';
 import 'package:welfare_fund_admin/features/home/views/home_screen.dart';
 import 'package:welfare_fund_admin/features/settings/providers/theme_provider.dart';
@@ -28,6 +29,7 @@ List<SingleChildWidget> multiProviders = [
   
   ChangeNotifierProvider(create: (context) => ThemeProvider()),
   ChangeNotifierProvider(create: (context) => MainPageProvider()),
+  ChangeNotifierProvider(create: (context) => ChangeCredentialsProvider()),
   
 ];
 

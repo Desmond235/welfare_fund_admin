@@ -5,11 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 // import 'package:http/http.dart' as http;
 import 'package:welfare_fund_admin/core/components/dialog_box.dart';
-import 'package:welfare_fund_admin/core/config/environ_config.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/constants/palette.dart';
-import 'package:welfare_fund_admin/core/controls/snackbar.dart';
 import 'package:welfare_fund_admin/core/service/verify_login.dart';
+import 'package:welfare_fund_admin/features/auth/providers/change_credentials_provider.dart';
 import 'package:welfare_fund_admin/features/widgets/signin/build_signin.dart';
 import 'package:welfare_fund_admin/features/widgets/signin/submit_button.dart';
 
@@ -27,14 +26,24 @@ class _AuthScreenState extends State<AuthScreen> {
   final passwordController = TextEditingController();
   final usernameController = TextEditingController();
   final bool _isSending = true;
+  late ChangeCredentialsProvider credentialsState;
+
+  @override
+  void initState() {
+    super.initState();
+     credentialsState =
+              Provider.of<ChangeCredentialsProvider>(context, listen: false);
+              
+          credentialsState.getCredentials();
+  }
 
   login() {
     VerifyLogin.post(
       usernameController.text,
       passwordController.text,
       context,
+      credentialsState
     );
-    Navigator.of(context).pushReplacementNamed('changeCredentials');
   }
 
   @override
@@ -46,7 +55,9 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     final width = MediaQuery.of(context).size.width;
+    
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (value, result) {
@@ -97,29 +108,26 @@ class _AuthScreenState extends State<AuthScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Container(
-                                          // color: priCol(context).withOpacity(0.4),
-                                          child: RichText(
-                                            text: TextSpan(
-                                              text: "Welcome to",
-                                              style: TextStyle(
-                                                color: Colors.yellow[700],
-                                                fontSize: width < 600 ? 20 : 25,
-                                                letterSpacing: 2,
-                                              ),
-                                              children: [
-                                                TextSpan(
-                                                    text: " Welfare Fund,",
-                                                    style: TextStyle(
-                                                        color:
-                                                            Colors.yellow[600],
-                                                        fontSize: width < 600
-                                                            ? 20
-                                                            : 25,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              ],
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "Welcome to",
+                                            style: TextStyle(
+                                              color: Colors.yellow[700],
+                                              fontSize: width < 600 ? 20 : 25,
+                                              letterSpacing: 2,
                                             ),
+                                            children: [
+                                              TextSpan(
+                                                  text: " Welfare Fund,",
+                                                  style: TextStyle(
+                                                      color:
+                                                          Colors.yellow[600],
+                                                      fontSize: width < 600
+                                                          ? 20
+                                                          : 25,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ],
                                           ),
                                         ),
                                         const SizedBox(height: 6),
@@ -178,7 +186,10 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                           SubmitButton(
                             isSending: _isSending,
-                            onTap: login,
+                            onTap: (){
+                              login();
+                              credentialsState.setIsChangeCredentials(false);
+                            },
                             isShadow: false,
                           )
                         ],

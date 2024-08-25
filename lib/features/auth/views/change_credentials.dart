@@ -22,6 +22,8 @@ class _ChangeCredentialsState extends State<ChangeCredentials> {
       usernameController.text,
       passwordController.text,
       context,
+      usernameController,
+      passwordController
     );
   }
 

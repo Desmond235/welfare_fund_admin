@@ -1,12 +1,20 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/controls/snackbar.dart';
+import 'package:welfare_fund_admin/features/auth/providers/change_credentials_provider.dart';
 
 class UpdateCredentialsResponse {
-  static post(String username, String password, BuildContext context) async {
-    const loginUrl = 'http://localhost:3000/api/admin/update_credentials';
+  static post(
+    String username,
+    String password,
+    BuildContext context,
+    TextEditingController usernameController,
+    TextEditingController passwordController,
+  ) async {
+    const loginUrl = 'http://10.0.2.2:3000/api/admin/update-credentials';
 
     try {
       final response = await http.post(
@@ -24,9 +32,10 @@ class UpdateCredentialsResponse {
         return;
       }
       if (response.statusCode == 200) {
-       dialog(context);
-      } else {
-        snackBar(context, 'Failed update credentials');
+        dialog(context);
+      }
+      if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
+        return snackBar(context, "username or password cannot be empty");
       }
     } on Exception catch (e) {
       snackBar(context, 'An error occurred: $e');
@@ -42,8 +51,12 @@ Future<void> dialog(BuildContext context) {
           content: const Text('Credentials updated successfully'),
           actions: [
             TextButton(
-              onPressed: () =>
-                  Navigator.of(context).pushReplacementNamed('main'),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('main', (_) => false);
+                Provider.of<ChangeCredentialsProvider>(context, listen: false)
+                    .setIsChangeCredentials(true);
+              },
               child: Text(
                 'Ok',
                 style: TextStyle(
