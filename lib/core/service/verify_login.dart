@@ -25,7 +25,7 @@ class VerifyLogin {
       return ;
      }
     if(response.statusCode ==200){
-      log('login successful');
+      print('login successful');
     } else{
       snackBar(context, 'Username or password is incorrect');
     }
