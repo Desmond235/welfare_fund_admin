@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:welfare_fund_admin/core/base/main/main_screen.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/features/auth/views/auth.dart';
+import 'package:welfare_fund_admin/features/auth/views/chang_password.dart';
 
 void main() async{
    WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const AuthScreen(),
+      home: const MainScreen(),
       routes: routes,
     );
   }

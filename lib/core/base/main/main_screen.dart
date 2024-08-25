@@ -14,11 +14,11 @@ class MainScreen extends StatelessWidget {
       return AnnotatedRegion<SystemUiOverlayStyle>(
         value: mainSystemUiOverlayStyle(context),
         child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              pageState.currentPage == 0 ? "Home" : "Transactions",
-            ),
-          ),
+          // appBar: AppBar(
+          //   title: Text(
+          //     pageState.currentPage == 0 ? "Home" : "Transactions",
+          //   ),
+          // ),
           body: KMainPages[pageState.currentPage],
 
           bottomNavigationBar: const BottomNavBar(),

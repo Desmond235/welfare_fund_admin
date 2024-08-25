@@ -6,6 +6,7 @@ import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/controls/snackbar.dart';
 import 'package:welfare_fund_admin/core/service/get_transaction.dart';
 import 'package:welfare_fund_admin/features/transaction/models/transaction_model.dart';
+import 'package:welfare_fund_admin/features/transaction/screens/search_transaction_screen.dart';
 import 'package:welfare_fund_admin/features/transaction/widgets/report.dart';
 import 'package:intl/intl.dart';
 
@@ -25,7 +26,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   late Future<List<TransactionModel>> loadMembership;
   final _formKey = GlobalKey<FormState>();
 
-   int _currentPage = 1;
+  int _currentPage = 1;
   int _rowSize = 10;
   DateTime? _selectedDate;
 
@@ -51,12 +52,12 @@ class _TransactionScreenState extends State<TransactionScreen> {
     }
   }
 
-
-  void downloadReport(List<TransactionModel> members, DateTime? selectedDate){
-    if(selectedDate != null) {
-      final filteredTransactions = filterTransactionsByMonth(members, selectedDate);
+  void downloadReport(List<TransactionModel> members, DateTime? selectedDate) {
+    if (selectedDate != null) {
+      final filteredTransactions =
+          filterTransactionsByMonth(members, selectedDate);
       generatePdfReport(filteredTransactions, selectedDate);
-    }else{
+    } else {
       snackBar(context, 'Please select a month first');
       return;
     }
@@ -64,14 +65,29 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
-  ///
-  /// The report is named "Transactions - <month name>.pdf", where <month name>
-  /// is the name of the month of [selectedDate].
-  ///
-  /// The report is saved in the user's app data directory.
+    ///
+    /// The report is named "Transactions - <month name>.pdf", where <month name>
+    /// is the name of the month of [selectedDate].
+    ///
+    /// The report is saved in the user's app data directory.
     final theme = Theme.of(context);
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Transactions'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const SearchTransactionScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.search),
+          )
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: FutureBuilder<List<TransactionModel>>(
@@ -96,7 +112,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ElevatedButton(
-                        
                         style: ElevatedButton.styleFrom(
                           backgroundColor: priCol(context),
                         ),
@@ -141,8 +156,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         child: PaginatedDataTable(
                           rowsPerPage: _rowSize,
                           availableRowsPerPage: const [10, 20, 30],
-                          initialFirstRowIndex: _currentPage ,
-                          onPageChanged: (value){
+                          initialFirstRowIndex: _currentPage,
+                          onPageChanged: (value) {
                             _currentPage = value;
                           },
                           onRowsPerPageChanged: (value) {

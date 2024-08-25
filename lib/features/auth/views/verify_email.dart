@@ -22,9 +22,8 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
 void verifyOtp( TextEditingController emailController){
   
-  VerifyOtpResponse.post(otpController.text);
+  VerifyOtpResponse.post(otpController.text, context);
 
-    Navigator.of(context).pushReplacementNamed('main');
   
 }
   

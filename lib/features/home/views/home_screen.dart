@@ -4,6 +4,7 @@ import 'package:welfare_fund_admin/core/controls/data_column.dart';
 import 'package:welfare_fund_admin/features/form/models/membership_model.dart';
 import 'package:welfare_fund_admin/features/form/service/form_service.dart';
 import 'package:welfare_fund_admin/features/home/widgets/report.dart';
+import 'package:welfare_fund_admin/features/transaction/screens/search_transaction_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -44,6 +45,17 @@ class _HomeScreenState extends State<HomeScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Members'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              
+            },
+            icon: const Icon(Icons.search),
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Center(
@@ -86,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                         IconButton(
+                        IconButton(
                           onPressed: () => generatePdfReportForMembers(members),
                           icon: const Icon(
                             Icons.download,
