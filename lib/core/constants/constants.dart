@@ -7,8 +7,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:welfare_fund_admin/core/base/main/main_page_provider.dart';
 import 'package:welfare_fund_admin/core/base/main/main_screen.dart';
 import 'package:welfare_fund_admin/core/constants/palette.dart';
+import 'package:welfare_fund_admin/core/service/verify_login.dart';
 import 'package:welfare_fund_admin/features/auth/providers/change_credentials_provider.dart';
 import 'package:welfare_fund_admin/features/auth/views/change_credentials.dart';
+import 'package:welfare_fund_admin/features/auth/views/email.dart';
+import 'package:welfare_fund_admin/features/auth/views/verify_email.dart';
 import 'package:welfare_fund_admin/features/home/views/home_screen.dart';
 import 'package:welfare_fund_admin/features/settings/providers/theme_provider.dart';
 import 'package:welfare_fund_admin/features/transaction/screens/transaction_screen.dart';
@@ -65,6 +68,8 @@ SystemUiOverlayStyle mainSystemUiOverlayStyle(BuildContext context) {
 Map<String, Widget Function(BuildContext)> routes = {
   "changeCredentials": (context) => const ChangeCredentials(),
   "main": (context) => const MainScreen(),
+  'otp': (context) => const VerifyEmail(),
+  'email':(context) => const EmailScreen(),
   
 };
 

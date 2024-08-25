@@ -162,7 +162,7 @@ class _SignInWidgetState extends State<SignInWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: (){Navigator.of(context).pushReplacementNamed('email');},
                   child: const Text("Forgot Password?",
                       style:
                           TextStyle(fontSize: 12, color: Palette.textColor1)),
