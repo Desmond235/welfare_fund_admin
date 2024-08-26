@@ -70,14 +70,12 @@ Future<void> generatePdfReport(
   );
   pdf.addPage(
     pw.MultiPage(
+      crossAxisAlignment: pw.CrossAxisAlignment.center,
       pageFormat: PdfPageFormat.a4,
       margin: const pw.EdgeInsets.all(20),
       build: (pw.Context context) {
         return [
-          pw.Column(
-            mainAxisAlignment: pw.MainAxisAlignment.center,
-            children: [
-              pw.Text(
+          pw.Text(
             'Transactional Report - ${formattedDate.format(selectedDate)}',
             style: pw.TextStyle(fontSize: 24, font: font),
           ),
@@ -102,17 +100,15 @@ Future<void> generatePdfReport(
             'Ebenezer Cathedral- Winneba',
             style: pw.TextStyle(font: font, fontSize: 20),
           ),
-          pw.Text(
-            'Winneba Ebenezer Methodist cathedral Welfare',
-            style: pw.TextStyle(font: font, fontSize: 20),
-            textAlign: pw.TextAlign.center
-          ),
+          pw.Text('Winneba Ebenezer Methodist cathedral Welfare',
+              style: pw.TextStyle(font: font, fontSize: 20),
+              textAlign: pw.TextAlign.center),
           pw.SizedBox(height: 20),
           pw.TableHelper.fromTextArray(
               context: context,
               headers: const ['Id', 'Email', 'Amount', 'Date'],
-              headerStyle:
-                  pw.TextStyle(font: font, fontWeight: pw.FontWeight.bold, fontSize: 17),
+              headerStyle: pw.TextStyle(
+                  font: font, fontWeight: pw.FontWeight.bold, fontSize: 17),
               data: [
                 ...transactions.map((transaction) {
                   return [
@@ -122,7 +118,7 @@ Future<void> generatePdfReport(
                     transaction.date,
                   ];
                 }),
-                ['', '', 'Total: ${totalAmount.toStringAsFixed(2)}', '' ]
+                ['', '', 'Total: ${totalAmount.toStringAsFixed(2)}', '']
               ],
               cellAlignments: {
                 0: pw.Alignment.center,
@@ -135,9 +131,6 @@ Future<void> generatePdfReport(
                 fontSize: 17,
                 fontWeight: pw.FontWeight.normal,
               ))
-            ]
-          )
-          
         ];
       },
     ),

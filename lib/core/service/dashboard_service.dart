@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:welfare_fund_admin/features/dashboard/model/gender_model.dart';
+import 'package:welfare_fund_admin/features/dashboard/model/total_amount.dart';
 import 'package:welfare_fund_admin/features/dashboard/model/total_members_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,5 +31,18 @@ class DashboardService {
     else{
       return [];
     } 
+  }
+
+  static Future<TotalAmountModel> totalAmount() async{
+    const url = 'http://10.0.2.2:3000/api/admin/';
+    final response = await http.get(Uri.parse('${url}total-amount'));
+
+    if (response.statusCode == 200){
+      final jsonResponse = jsonDecode(response.body);
+      return TotalAmountModel.fromJson(jsonResponse);
+    }
+    else{
+      return TotalAmountModel(totalAmount: 0);
+    }
   }
 }
