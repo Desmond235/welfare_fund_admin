@@ -79,7 +79,7 @@ class MembershipModel {
       house_number: json['house_number'] ?? '',
       place_of_abode: json['place_of_abode'] ?? '',
       land_mark: json['land_mark'] ?? '',
-      home_town: json['hom_town'] ?? '',
+      home_town: json['home_town'] ?? '',
       region: json['region'] ?? '',
       marital_status: json['marital_status'] ?? '',
       others: json['others'] ?? '',

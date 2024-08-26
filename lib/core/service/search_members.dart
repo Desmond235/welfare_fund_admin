@@ -5,7 +5,7 @@ import 'package:welfare_fund_admin/core/controls/snackbar.dart';
 import 'package:welfare_fund_admin/features/form/models/membership_model.dart';
 import 'package:http/http.dart' as http;
 
-class SearchTransactionService {
+class SearchMembersService {
   static Future<List<MembershipModel>> getTransactions(
      BuildContext context, {String searchQuery = ''}) async {
     const searchUrl = 'http://10.0.2.2:3000/api/admin';

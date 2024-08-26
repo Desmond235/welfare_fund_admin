@@ -226,9 +226,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
           setState(() {
             _currentSortIndex = columnIndex;
             if (_isSortAsc) {
-              members.sort((a, b) => b.email.compareTo(a.email));
+              members.sort((a, b) => b.id.compareTo(a.id));
             } else {
-              members.sort((a, b) => a.email.compareTo(b.email));
+              members.sort((a, b) => a.id.compareTo(b.id));
             }
             _isSortAsc = !_isSortAsc;
           });
@@ -243,9 +243,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
           setState(() {
             _currentSortIndex = columnIndex;
             if (_isSortAsc) {
-              members.sort((a, b) => b.amount.compareTo(a.amount));
+              members.sort((a, b) => b.id.compareTo(a.id));
             } else {
-              members.sort((a, b) => a.amount.compareTo(b.amount));
+              members.sort((a, b) => a.id.compareTo(b.id));
             }
             _isSortAsc = !_isSortAsc;
           });
@@ -260,9 +260,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
           setState(() {
             _currentSortIndex = columnIndex;
             if (_isSortAsc) {
-              members.sort((a, b) => b.date.compareTo(a.date));
+              members.sort((a, b) => b.id.compareTo(a.id));
             } else {
-              members.sort((a, b) => a.date.compareTo(b.date));
+              members.sort((a, b) => a.id.compareTo(b.id));
             }
             _isSortAsc = !_isSortAsc;
           });

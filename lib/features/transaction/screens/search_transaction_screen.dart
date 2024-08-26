@@ -93,7 +93,10 @@ class _SearchTransactionScreenState extends State<SearchTransactionScreen> {
             child: TextField(
               controller: _searchController,
               decoration: const InputDecoration(
-                  labelText: 'Search', suffixIcon: Icon(Icons.search)),
+                labelText: 'Search',
+                suffixIcon: Icon(Icons.search),
+            
+              ),
             ),
           ),
           Expanded(
@@ -106,23 +109,25 @@ class _SearchTransactionScreenState extends State<SearchTransactionScreen> {
                         child: Text('No results found'),
                       )
                     : SingleChildScrollView(
-                        child: PaginatedDataTable(
-                          rowsPerPage: _rowsPerPage,
-                          header: const Text('Search Results'),
-                          availableRowsPerPage: const [10, 20,40],
-                          onRowsPerPageChanged: (value){
-                            setState(() {
-                              _rowsPerPage = value!;
-                            });
-                          },
-                          source: _DataSource(transactions: _transactions),
-                          columns: const [
-                            DataColumn(label: Text('ID')),
-                            DataColumn(label: Text('Amount')),
-                            DataColumn(label: Text('Email')),
-                            DataColumn(label: Text('Date')),
-                          ],
-
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: PaginatedDataTable(
+                            rowsPerPage: _rowsPerPage,
+                            header: const Text('Search Results'),
+                            availableRowsPerPage: const [10, 20, 40],
+                            onRowsPerPageChanged: (value) {
+                              setState(() {
+                                _rowsPerPage = value!;
+                              });
+                            },
+                            source: _DataSource(transactions: _transactions),
+                            columns: const [
+                              DataColumn(label: Text('ID')),
+                              DataColumn(label: Text('Amount')),
+                              DataColumn(label: Text('Email')),
+                              DataColumn(label: Text('Date')),
+                            ],
+                          ),
                         ),
                       ),
           )
@@ -142,7 +147,7 @@ class _DataSource extends DataTableSource {
       return null;
     }
 
-     final item = transactions[index];
+    final item = transactions[index];
     return DataRow(
       cells: [
         DataCell(Text(item.id.toString())),
@@ -157,7 +162,7 @@ class _DataSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => throw UnimplementedError();
+  int get rowCount => transactions.length;
 
   @override
   int get selectedRowCount => 0;
