@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:welfare_fund_admin/core/controls/data_column.dart';
 import 'package:welfare_fund_admin/core/service/change_password_service.dart';
 import 'package:welfare_fund_admin/core/service/search_members.dart';
 import 'package:welfare_fund_admin/core/service/search_transaction_service.dart';
@@ -123,11 +124,24 @@ class _SearchMembersScreenState extends State<SearchMembersScreen> {
                               });
                             },
                             source: _DataSource(members: _members),
-                            columns: const [
-                              DataColumn(label: Text('ID')),
-                              DataColumn(label: Text('Amount')),
-                              DataColumn(label: Text('Email')),
-                              DataColumn(label: Text('Date')),
+                            columns: [
+                              const DataColumn(
+                                label: Text(
+                                  'Id',
+                                ),
+                              ),
+                              const DataColumn(
+                                label: Text(
+                                  'Full Name',
+                          
+                                ),
+                              ),
+                              const DataColumn(
+                                label: Text(
+                                  'Date of Birth',
+                                ),
+                              ),
+                              ...getColumns()
                             ],
                           ),
                         ),

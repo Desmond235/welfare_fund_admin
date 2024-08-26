@@ -121,6 +121,7 @@ class _SearchTransactionScreenState extends State<SearchTransactionScreen> {
                                 _rowsPerPage = value!;
                               });
                             },
+
                             source: _DataSource(transactions: _transactions),
                             columns: const [
                               DataColumn(label: Text('ID')),

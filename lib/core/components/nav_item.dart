@@ -11,11 +11,13 @@ class NavItem extends StatefulWidget {
   String get name {
     switch (index) {
       case 0:
-        return "Home";
+        return "Dashboard";
       case 1:
-        return "Transactions";
+        return "Members";
+      case 2:
+        return "Transactions";  
       default:
-        return "Home";
+        return "Dashboard";
     }
   }
 

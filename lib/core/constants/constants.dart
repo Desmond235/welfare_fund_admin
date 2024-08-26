@@ -14,12 +14,14 @@ import 'package:welfare_fund_admin/features/auth/views/chang_password.dart';
 import 'package:welfare_fund_admin/features/auth/views/change_credentials.dart';
 import 'package:welfare_fund_admin/features/auth/views/email_screen.dart';
 import 'package:welfare_fund_admin/features/auth/views/verify_email.dart';
+import 'package:welfare_fund_admin/features/dashboard/screens/dashboard_screen.dart';
 import 'package:welfare_fund_admin/features/home/views/home_screen.dart';
 import 'package:welfare_fund_admin/features/settings/providers/theme_provider.dart';
 import 'package:welfare_fund_admin/features/transaction/screens/transaction_screen.dart';
 
 // ignore: non_constant_identifier_names
 final KMainPages = [
+  const DashboardScreen(),
   const HomeScreen(),
   const TransactionScreen(),
 ];
@@ -77,12 +79,8 @@ Map<String, Widget Function(BuildContext)> routes = {
   
 };
 
-List<Widget> kOnboardPage = [
-  
- ];
+TextStyle style = const TextStyle(color: Colors.black);
 
-
- 
 String fullNameController = '';
 String dateOfBirthController = '';
 String dateOfRegistrationController = '';

@@ -33,8 +33,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ? Colors.black26
           : Colors.white,
       destinations: const [
-        NavItem(icon: MaterialCommunityIcons.home, index: 0),
-        NavItem(icon: Icons.payment, index: 1),
+        NavItem(icon: Icons.dashboard, index: 0),
+        NavItem(icon: Icons.person, index: 1),
+        NavItem(icon: Icons.payment, index: 2),
       ],
     );
   }
