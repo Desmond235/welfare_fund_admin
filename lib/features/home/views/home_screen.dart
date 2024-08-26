@@ -3,6 +3,7 @@ import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/controls/data_column.dart';
 import 'package:welfare_fund_admin/features/form/models/membership_model.dart';
 import 'package:welfare_fund_admin/features/form/service/form_service.dart';
+import 'package:welfare_fund_admin/features/home/views/search_members.dart';
 import 'package:welfare_fund_admin/features/home/widgets/report.dart';
 import 'package:welfare_fund_admin/features/transaction/screens/search_transaction_screen.dart';
 
@@ -50,7 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const SearchMembersScreen(),
+                ),
+              );
             },
             icon: const Icon(Icons.search),
           )
@@ -172,9 +177,9 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             _currentSortIndex = columnIndex;
             if (_isSortAsc) {
-              members.sort((a, b) => b.full_name.compareTo(a.full_name));
+              members.sort((a, b) => b.id.compareTo(a.id));
             } else {
-              members.sort((a, b) => a.full_name.compareTo(b.full_name));
+              members.sort((a, b) => a.id.compareTo(b.id));
             }
             _isSortAsc = !_isSortAsc;
           });
@@ -189,11 +194,9 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             _currentSortIndex = columnIndex;
             if (_isSortAsc) {
-              members
-                  .sort((a, b) => b.date_of_birth.compareTo(a.date_of_birth));
+              members.sort((a, b) => b.id.compareTo(a.id));
             } else {
-              members
-                  .sort((a, b) => a.date_of_birth.compareTo(b.date_of_birth));
+              members.sort((a, b) => a.id.compareTo(b.id));
             }
             _isSortAsc = !_isSortAsc;
           });
@@ -217,32 +220,7 @@ class _DataSource extends DataTableSource {
       return null;
     }
     final item = members[index];
-    return DataRow(cells: [
-      DataCell(Text(item.id.toString())),
-      DataCell(Text(item.full_name)),
-      DataCell(Text(item.date_of_birth)),
-      DataCell(Text(item.date_of_registration)),
-      DataCell(Text(item.contact.toString())),
-      DataCell(Text(item.house_number)),
-      DataCell(Text(item.place_of_abode)),
-      DataCell(Text(item.land_mark)),
-      DataCell(Text(item.home_town)),
-      DataCell(Text(item.region)),
-      DataCell(Text(item.marital_status)),
-      DataCell(Text(item.name_of_spouse ?? 'N/A')),
-      DataCell(Text(item.life_status ?? "N/A")),
-      DataCell(Text(item.occupation)),
-      DataCell(Text(item.fathers_name)),
-      DataCell(Text(item.father_life_status)),
-      DataCell(Text(item.mothers_name)),
-      DataCell(Text(item.mother_life_status)),
-      DataCell(Text(item.next_of_kin)),
-      DataCell(Text(item.next_of_kin_contact.toString())),
-      DataCell(Text(item.class_leader)),
-      DataCell(Text(item.class_leader_contact.toString())),
-      DataCell(Text(item.organization_of_member ?? 'N/A')),
-      DataCell(Text(item.org_leader_contact.toString()))
-    ]);
+    return DataRow(cells: cells(item: item));
   }
 
   @override
@@ -253,4 +231,33 @@ class _DataSource extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+}
+
+List<DataCell> cells({required MembershipModel item}) {
+  return [
+    DataCell(Text(item.id.toString())),
+    DataCell(Text(item.full_name)),
+    DataCell(Text(item.date_of_birth)),
+    DataCell(Text(item.date_of_registration)),
+    DataCell(Text(item.contact.toString())),
+    DataCell(Text(item.house_number)),
+    DataCell(Text(item.place_of_abode)),
+    DataCell(Text(item.land_mark)),
+    DataCell(Text(item.home_town)),
+    DataCell(Text(item.region)),
+    DataCell(Text(item.marital_status)),
+    DataCell(Text(item.name_of_spouse ?? 'N/A')),
+    DataCell(Text(item.life_status ?? "N/A")),
+    DataCell(Text(item.occupation)),
+    DataCell(Text(item.fathers_name)),
+    DataCell(Text(item.father_life_status)),
+    DataCell(Text(item.mothers_name)),
+    DataCell(Text(item.mother_life_status)),
+    DataCell(Text(item.next_of_kin)),
+    DataCell(Text(item.next_of_kin_contact.toString())),
+    DataCell(Text(item.class_leader)),
+    DataCell(Text(item.class_leader_contact.toString())),
+    DataCell(Text(item.organization_of_member ?? 'N/A')),
+    DataCell(Text(item.org_leader_contact.toString()))
+  ];
 }

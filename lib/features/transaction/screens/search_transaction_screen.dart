@@ -33,8 +33,10 @@ class _SearchTransactionScreenState extends State<SearchTransactionScreen> {
     });
 
     try {
-      final results = await SearchTransactionService.getTransactions(context,
-          searchQuery: _searchController.text);
+      final results = await SearchTransactionService.getTransactions(
+        context,
+        searchQuery: _searchController.text,
+      );
 
       setState(() {
         _transactions = results;
@@ -95,7 +97,6 @@ class _SearchTransactionScreenState extends State<SearchTransactionScreen> {
               decoration: const InputDecoration(
                 labelText: 'Search',
                 suffixIcon: Icon(Icons.search),
-            
               ),
             ),
           ),
