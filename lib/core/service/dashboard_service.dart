@@ -33,16 +33,16 @@ class DashboardService {
     } 
   }
 
-  static Future<TotalAmountModel> totalAmount() async{
+  static Future<List<TotalAmountModel>> totalAmount() async{
     const url = 'http://10.0.2.2:3000/api/admin/';
     final response = await http.get(Uri.parse('${url}total-amount'));
 
     if (response.statusCode == 200){
-      final jsonResponse = jsonDecode(response.body);
-      return TotalAmountModel.fromJson(jsonResponse);
+      final List<dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse.map((data) => TotalAmountModel.fromJson(data)).toList();
     }
     else{
-      return TotalAmountModel(totalAmount: 0);
+      return [];
     }
   }
 }

@@ -15,7 +15,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   TotalMembersModel? _totalMembers;
-  TotalAmountModel? _totalAmount;
+  List<TotalAmountModel> _totalAmount = [];
   List<GenderModel>? _gender;
 
   TextStyle style = const TextStyle(fontSize: 15);
@@ -68,7 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (_totalMembers == null || _gender == null || _totalAmount == null)
+                  if (_totalMembers == null || _gender == null)
                     const Center(
                       child: CircularProgressIndicator(),
                     )
@@ -199,12 +199,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                               '₵ ${_totalAmount!.totalAmount.toString()}',
+                               '₵ ${_totalAmount[0].totalAmount.toString()}',
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(fontSize: 30),
                               ),
+                              
                               Text(
-                                _totalAmount!.totalAmount == 0
+                                _totalAmount[0].totalAmount == 0
                                     ? 'No Payment received yet'
                                     : 'Received',
                                 style: const TextStyle(fontSize: 18),
