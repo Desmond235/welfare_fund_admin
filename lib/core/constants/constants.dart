@@ -9,6 +9,7 @@ import 'package:welfare_fund_admin/core/base/main/main_screen.dart';
 import 'package:welfare_fund_admin/core/constants/palette.dart';
 import 'package:welfare_fund_admin/core/service/verify_login.dart';
 import 'package:welfare_fund_admin/features/auth/providers/change_credentials_provider.dart';
+import 'package:welfare_fund_admin/features/auth/providers/sign_provider.dart';
 import 'package:welfare_fund_admin/features/auth/views/auth.dart';
 import 'package:welfare_fund_admin/features/auth/views/chang_password.dart';
 import 'package:welfare_fund_admin/features/auth/views/change_credentials.dart';
@@ -18,12 +19,14 @@ import 'package:welfare_fund_admin/features/dashboard/screens/dashboard_screen.d
 import 'package:welfare_fund_admin/features/home/views/home_screen.dart';
 import 'package:welfare_fund_admin/features/settings/providers/theme_provider.dart';
 import 'package:welfare_fund_admin/features/transaction/screens/transaction_screen.dart';
+import 'package:welfare_fund_admin/settings/settings_screen.dart';
 
 // ignore: non_constant_identifier_names
 final KMainPages = [
   const DashboardScreen(),
   const HomeScreen(),
   const TransactionScreen(),
+  const SettingsScreen(),
 ];
 
 Color priCol(BuildContext context) {
@@ -33,10 +36,10 @@ Color priCol(BuildContext context) {
 final Future<SharedPreferences> sharedPrefs = SharedPreferences.getInstance();
 
 List<SingleChildWidget> multiProviders = [
-  
   ChangeNotifierProvider(create: (context) => ThemeProvider()),
   ChangeNotifierProvider(create: (context) => MainPageProvider()),
   ChangeNotifierProvider(create: (context) => ChangeCredentialsProvider()),
+  ChangeNotifierProvider(create: (context) => SignInProvider()),
   
 ];
 

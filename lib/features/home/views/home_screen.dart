@@ -66,131 +66,142 @@ class _HomeScreenState extends State<HomeScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Members'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const SearchMembersScreen(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.search),
-          )
-        ],
-      ),
-      body:  SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Center(
-                // Ensures the DataTable is centered
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FutureBuilder<List<MembershipModel>>(
-                    future: loadMembership,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Text('No data available');
-                      }
-
-                      final members = snapshot.data!;
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
+        appBar: AppBar(
+          title: const Text('Members'),
+          actions: [
+            IconButton(
+              tooltip: 'Search',
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const SearchMembersScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.search),
+            )
+          ],
+        ),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Center(
+            // Ensures the DataTable is centered
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FutureBuilder<List<MembershipModel>>(
+                future: loadMembership,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Column(
+                      children: [
+                        Image.asset(
+                          'assets/images/no-data.png',
+                          scale: 10,
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'No data available',
+                          style: TextStyle(fontSize: 17),
+                        )
+                      ],
+                    );
+                  }
+                  final members = snapshot.data!;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: priCol(context),
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    loadMembership = loadMembers();
-                                  });
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.only(right: 20),
-                                  child: Text(
-                                    'Refresh',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                              IconButton(
-                                tooltip: 'Download report',
-                                onPressed: () =>
-                                    generatePdfReportForMembers(members, context),
-                                icon: const Icon(
-                                  Icons.download,
-                                  size: 30,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Theme(
-                            data: theme.copyWith(
-                              iconTheme:
-                                  theme.iconTheme.copyWith(color: Colors.white),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: priCol(context),
                             ),
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 20),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Form(
-                                  key: _formKey,
-                                  child: PaginatedDataTable(
-                                    source: _DataSource(members: members),
-                                    rowsPerPage: _pageSize,
-                                    availableRowsPerPage: const [10, 15, 25],
-                                    onRowsPerPageChanged: (value) {
-                                      setState(() {
-                                        _pageSize = value!;
-                                      });
-                                    },
-                                    
-                                    headingRowColor:
-                                        WidgetStateProperty.resolveWith(
-                                            (states) => priCol(context)),
-                                    showCheckboxColumn: true,
-                                    sortColumnIndex: _currentSortIndex,
-                                    sortAscending: _isSortAsc,
-                                    columns: getDataColumns(members),
-                                  ),
-                                ),
+                            onPressed: () {
+                              setState(() {
+                                loadMembership = loadMembers();
+                              });
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.only(right: 20),
+                              child: Text(
+                                'Refresh',
+                                style: TextStyle(color: Colors.white),
                               ),
+                            ),
+                          ),
+                          IconButton(
+                            tooltip: 'Download report',
+                            onPressed: () =>
+                                generatePdfReportForMembers(members, context),
+                            icon: const Icon(
+                              Icons.download,
+                              size: 30,
                             ),
                           ),
                         ],
-                      );
-                    },
-                  ),
-                ),
+                      ),
+                      Theme(
+                        data: theme.copyWith(
+                          iconTheme:
+                              theme.iconTheme.copyWith(color: Colors.white),
+                        ),
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Form(
+                              key: _formKey,
+                              child: PaginatedDataTable(
+                                source: _DataSource(members: members),
+                                rowsPerPage: _pageSize,
+                                availableRowsPerPage: const [10, 15, 25],
+                                onRowsPerPageChanged: (value) {
+                                  setState(() {
+                                    _pageSize = value!;
+                                  });
+                                },
+                                headingRowColor:
+                                    WidgetStateProperty.resolveWith(
+                                        (states) => priCol(context)),
+                                showCheckboxColumn: true,
+                                sortColumnIndex: _currentSortIndex,
+                                sortAscending: _isSortAsc,
+                                columns: getDataColumns(members),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
-            )
-          // : Center(
-          //   child: Column(
-          //     children: [
-          //       Lottie.asset(
-          //           'assets/no-internet.json',
-          //           alignment: Alignment.center,
-          //            fit: BoxFit.contain,
-          //           width: 230,
-          //           height: 230,
-          //         ),
-          //         const Text('Check Internet Connection', style: TextStyle(
-          //           fontSize: 16
-          //         ),)
-          //     ],
-          //   ),
-          // ),
-    );
+            ),
+          ),
+        )
+        // : Center(
+        //   child: Column(
+        //     children: [
+        //       Lottie.asset(
+        //           'assets/no-internet.json',
+        //           alignment: Alignment.center,
+        //            fit: BoxFit.contain,
+        //           width: 230,
+        //           height: 230,
+        //         ),
+        //         const Text('Check Internet Connection', style: TextStyle(
+        //           fontSize: 16
+        //         ),)
+        //     ],
+        //   ),
+        // ),
+        );
   }
 
   List<DataColumn> getDataColumns(List<MembershipModel> members) {
@@ -234,9 +245,11 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             _currentSortIndex = columnIndex;
             if (_isSortAsc) {
-              members.sort((a, b) => b.date_of_birth.compareTo(a.date_of_birth));
+              members
+                  .sort((a, b) => b.date_of_birth.compareTo(a.date_of_birth));
             } else {
-              members.sort((a, b) => a.date_of_birth.compareTo(b.date_of_birth));
+              members
+                  .sort((a, b) => a.date_of_birth.compareTo(b.date_of_birth));
             }
             _isSortAsc = !_isSortAsc;
           });

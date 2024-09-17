@@ -36,6 +36,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         NavItem(icon: Icons.dashboard, index: 0),
         NavItem(icon: Icons.person, index: 1),
         NavItem(icon: Icons.payment, index: 2),
+        NavItem(icon: Icons.settings, index: 3),
       ],
     );
   }

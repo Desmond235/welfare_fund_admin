@@ -15,7 +15,9 @@ class NavItem extends StatefulWidget {
       case 1:
         return "Members";
       case 2:
-        return "Transactions";  
+        return "Transactions"; 
+      case 3:
+        return "Settings";   
       default:
         return "Dashboard";
     }

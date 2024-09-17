@@ -50,11 +50,12 @@ class _TransactionScreenState extends State<TransactionScreen> {
     });
   }
 
- @override
+  @override
   void dispose() {
     super.dispose();
-      streamSubscription!.cancel();
+    streamSubscription!.cancel();
   }
+
   Future<List<TransactionModel>> loadMembers() async {
     final membership = await GetTransactionResponse.getTransactions();
     return membership;
@@ -89,6 +90,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
         title: const Text('Transactions'),
         actions: [
           IconButton(
+            tooltip: 'Search ',
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -110,7 +112,17 @@ class _TransactionScreenState extends State<TransactionScreen> {
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Text('No data available');
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/no_cash.png', scale: 10),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'No Transactions made yet',
+                    style: TextStyle(fontSize: 17),
+                  )
+                ],
+              );
             }
 
             final members = snapshot.data!;
@@ -197,7 +209,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
             );
           },
         ),
-      ) ,
+      ),
       // :  Center(
       //       child: Column(
       //         children: [
@@ -251,7 +263,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-       DataColumn(
+      DataColumn(
         onSort: (columnIndex, value) {
           setState(() {
             _currentSortIndex = columnIndex;
@@ -285,7 +297,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      
       DataColumn(
         onSort: (columnIndex, value) {
           setState(() {
@@ -297,7 +308,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
             }
             _isSortAsc = !_isSortAsc;
           });
-        },        label: const Text(
+        },
+        label: const Text(
           'Email',
           style: TextStyle(color: Colors.white),
         ),
