@@ -5,8 +5,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:welfare_fund_admin/core/base/main/main_screen.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
+import 'package:welfare_fund_admin/core/theme/dark_theme.dart';
 import 'package:welfare_fund_admin/features/auth/views/auth.dart';
 import 'package:welfare_fund_admin/features/auth/views/chang_password.dart';
+import 'package:welfare_fund_admin/features/settings/providers/theme_provider.dart';
 
 void main() async{
    WidgetsFlutterBinding.ensureInitialized();
@@ -29,14 +31,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final themeState = Provider.of<ThemeProvider>(context);
+    themeState.getDarkTheme();
+
     return MaterialApp(
       scrollBehavior: MyCustomScrollBehavior(),
+      darkTheme: darkMode,
+      themeMode: themeState.isDarkTheme
+          ? ThemeMode.dark
+          : !themeState.isDarkTheme
+              ? ThemeMode.light
+              : ThemeMode.system,
+      theme: Provider.of<ThemeProvider>(context).themeData,
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
       home: const MainScreen(),
       routes: routes,
     );

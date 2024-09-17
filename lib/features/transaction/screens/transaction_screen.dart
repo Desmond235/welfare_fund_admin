@@ -128,6 +128,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           backgroundColor: priCol(context),
                         ),
                         onPressed: () {
+                          print(members.length);
                           setState(() {
                             loadMembership = loadMembers();
                           });
@@ -149,7 +150,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         ),
                       ),
                       IconButton(
-                        tooltip: 'Download',
+                        tooltip: 'Download report',
                         onPressed: () => downloadReport(members, _selectedDate),
                         icon: const Icon(Icons.download, size: 30),
                       )
@@ -168,7 +169,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         child: PaginatedDataTable(
                           rowsPerPage: _rowSize,
                           availableRowsPerPage: const [10, 20, 30],
-                          initialFirstRowIndex: _currentPage,
+                          // initialFirstRowIndex: _currentPage,
                           onPageChanged: (value) {
                             _currentPage = value;
                           },

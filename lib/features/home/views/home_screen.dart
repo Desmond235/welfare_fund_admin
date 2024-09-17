@@ -124,6 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               IconButton(
+                                tooltip: 'Download report',
                                 onPressed: () =>
                                     generatePdfReportForMembers(members, context),
                                 icon: const Icon(
@@ -153,6 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         _pageSize = value!;
                                       });
                                     },
+                                    
                                     headingRowColor:
                                         WidgetStateProperty.resolveWith(
                                             (states) => priCol(context)),
@@ -215,9 +217,9 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             _currentSortIndex = columnIndex;
             if (_isSortAsc) {
-              members.sort((a, b) => b.id.compareTo(a.id));
+              members.sort((a, b) => b.full_name.compareTo(a.full_name));
             } else {
-              members.sort((a, b) => a.id.compareTo(b.id));
+              members.sort((a, b) => a.full_name.compareTo(b.full_name));
             }
             _isSortAsc = !_isSortAsc;
           });
@@ -232,9 +234,9 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             _currentSortIndex = columnIndex;
             if (_isSortAsc) {
-              members.sort((a, b) => b.id.compareTo(a.id));
+              members.sort((a, b) => b.date_of_birth.compareTo(a.date_of_birth));
             } else {
-              members.sort((a, b) => a.id.compareTo(b.id));
+              members.sort((a, b) => a.date_of_birth.compareTo(b.date_of_birth));
             }
             _isSortAsc = !_isSortAsc;
           });
