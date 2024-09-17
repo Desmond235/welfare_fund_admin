@@ -8,6 +8,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:intl/intl.dart';
 import 'package:welfare_fund_admin/core/service/get_transaction.dart';
+import 'package:welfare_fund_admin/features/home/widgets/report.dart';
 import 'package:welfare_fund_admin/features/transaction/models/transaction_model.dart';
 
 Future<List<TransactionModel>> fetchAllTransactions() async {
@@ -48,7 +49,7 @@ Future<DateTime?> selectedMonth(BuildContext context) async {
 }
 
 Future<void> generatePdfReport(
-    List<TransactionModel> transactions, DateTime selectedDate) async {
+    List<TransactionModel> transactions, DateTime selectedDate, BuildContext context) async {
   final pdf = pw.Document();
   final formattedDate = DateFormat.yMMMM();
 
@@ -154,7 +155,9 @@ Future<void> generatePdfReport(
   final file = File("${output.path}/report.pdf");
   await file.writeAsBytes(await pdf.save());
 
-  openFile(file.path);
+   if (await file.exists()) {
+    if (context.mounted) showDialogue(context, output, file);
+  }
 }
 
 void openFile(String filePath) {

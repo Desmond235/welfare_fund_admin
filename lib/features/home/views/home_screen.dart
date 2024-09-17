@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:lottie/lottie.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/controls/data_column.dart';
 import 'package:welfare_fund_admin/features/form/models/membership_model.dart';
@@ -26,6 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int _pageSize = 10;
 
+  StreamSubscription? streamSubscription;
+  InternetConnectionChecker checkConn = InternetConnectionChecker();
+  bool hasConn = false;
+
   void updateMembers(int id) {
     _formKey.currentState!.save();
   }
@@ -34,6 +42,18 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     loadMembership = loadMembers();
+    streamSubscription = checkConn.onStatusChange.listen((status) {
+      bool connStatus = status == InternetConnectionStatus.connected;
+      setState(() {
+        hasConn = connStatus;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    streamSubscription!.cancel();
   }
 
   Future<List<MembershipModel>> loadMembers() async {
@@ -61,95 +81,113 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Center(
-          // Ensures the DataTable is centered
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FutureBuilder<List<MembershipModel>>(
-              future: loadMembership,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Text('No data available');
-                }
+      body:  SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Center(
+                // Ensures the DataTable is centered
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FutureBuilder<List<MembershipModel>>(
+                    future: loadMembership,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Text('No data available');
+                      }
 
-                final members = snapshot.data!;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: priCol(context),
+                      final members = snapshot.data!;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: priCol(context),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    loadMembership = loadMembers();
+                                  });
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.only(right: 20),
+                                  child: Text(
+                                    'Refresh',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () =>
+                                    generatePdfReportForMembers(members, context),
+                                icon: const Icon(
+                                  Icons.download,
+                                  size: 30,
+                                ),
+                              ),
+                            ],
                           ),
-                          onPressed: () {
-                            setState(() {
-                              loadMembership = loadMembers();
-                            });
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.only(right: 20),
-                            child: Text(
-                              'Refresh',
-                              style: TextStyle(color: Colors.white),
+                          Theme(
+                            data: theme.copyWith(
+                              iconTheme:
+                                  theme.iconTheme.copyWith(color: Colors.white),
+                            ),
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 20),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Form(
+                                  key: _formKey,
+                                  child: PaginatedDataTable(
+                                    source: _DataSource(members: members),
+                                    rowsPerPage: _pageSize,
+                                    availableRowsPerPage: const [10, 15, 25],
+                                    onRowsPerPageChanged: (value) {
+                                      setState(() {
+                                        _pageSize = value!;
+                                      });
+                                    },
+                                    headingRowColor:
+                                        WidgetStateProperty.resolveWith(
+                                            (states) => priCol(context)),
+                                    showCheckboxColumn: true,
+                                    sortColumnIndex: _currentSortIndex,
+                                    sortAscending: _isSortAsc,
+                                    columns: getDataColumns(members),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                        IconButton(
-                          onPressed: () => generatePdfReportForMembers(members),
-                          icon: const Icon(
-                            Icons.download,
-                            size: 30,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Theme(
-                      data: theme.copyWith(
-                        iconTheme:
-                            theme.iconTheme.copyWith(color: Colors.white),
-                      ),
-                      child: Container(
-                        margin: const EdgeInsets.only(top: 20),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Form(
-                            key: _formKey,
-                            child: PaginatedDataTable(
-                              source: _DataSource(members: members),
-                              rowsPerPage: _pageSize,
-                              availableRowsPerPage: const [10, 15, 25],
-                              onRowsPerPageChanged: (value) {
-                                setState(() {
-                                  _pageSize = value!;
-                                });
-                              },
-                              headingRowColor: WidgetStateProperty.resolveWith(
-                                  (states) => priCol(context)),
-                              showCheckboxColumn: true,
-                              sortColumnIndex: _currentSortIndex,
-                              sortAscending: _isSortAsc,
-                              columns: getDataColumns(members),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-        ),
-      ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+            )
+          // : Center(
+          //   child: Column(
+          //     children: [
+          //       Lottie.asset(
+          //           'assets/no-internet.json',
+          //           alignment: Alignment.center,
+          //            fit: BoxFit.contain,
+          //           width: 230,
+          //           height: 230,
+          //         ),
+          //         const Text('Check Internet Connection', style: TextStyle(
+          //           fontSize: 16
+          //         ),)
+          //     ],
+          //   ),
+          // ),
     );
   }
 

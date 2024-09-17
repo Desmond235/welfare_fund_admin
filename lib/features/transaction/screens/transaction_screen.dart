@@ -1,6 +1,10 @@
 // ignore_for_file: unused_local_variable
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:lottie/lottie.dart';
 // import 'package:provider/provider.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/controls/snackbar.dart';
@@ -32,12 +36,25 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   final formattedDate = DateFormat.yMMMM();
 
+  StreamSubscription? streamSubscription;
+  bool hasConnection = false;
+
   @override
   void initState() {
     super.initState();
     loadMembership = loadMembers();
+    streamSubscription =
+        InternetConnectionChecker().onStatusChange.listen((status) {
+      hasConnection = status == InternetConnectionStatus.connected;
+      setState(() {});
+    });
   }
 
+ @override
+  void dispose() {
+    super.dispose();
+      streamSubscription!.cancel();
+  }
   Future<List<TransactionModel>> loadMembers() async {
     final membership = await GetTransactionResponse.getTransactions();
     return membership;
@@ -56,7 +73,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
     if (selectedDate != null) {
       final filteredTransactions =
           filterTransactionsByMonth(members, selectedDate);
-      generatePdfReport(filteredTransactions, selectedDate);
+      generatePdfReport(filteredTransactions, selectedDate, context);
     } else {
       snackBar(context, 'Please select a month first');
       return;
@@ -65,11 +82,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ///
-    /// The report is named "Transactions - <month name>.pdf", where <month name>
-    /// is the name of the month of [selectedDate].
-    ///
-    /// The report is saved in the user's app data directory.
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -184,7 +196,24 @@ class _TransactionScreenState extends State<TransactionScreen> {
             );
           },
         ),
-      ),
+      ) ,
+      // :  Center(
+      //       child: Column(
+      //         children: [
+      //           Lottie.asset(
+      //               'assets/no-internet.json',
+
+      //               alignment: Alignment.center,
+      //                fit: BoxFit.contain,
+      //               width: 230,
+      //               height: 230,
+      //             ),
+      //             const Text('Check Internet Connection', style: TextStyle(
+      //               fontSize: 16
+      //             ),)
+      //         ],
+      //       ),
+      //     ),
       floatingActionButton: _isEditMode
           ? FloatingActionButton(
               onPressed: () {
@@ -221,19 +250,53 @@ class _TransactionScreenState extends State<TransactionScreen> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      DataColumn(
+       DataColumn(
         onSort: (columnIndex, value) {
           setState(() {
             _currentSortIndex = columnIndex;
             if (_isSortAsc) {
-              members.sort((a, b) => b.id.compareTo(a.id));
+              members.sort((a, b) => b.firstName.compareTo(a.firstName));
             } else {
-              members.sort((a, b) => a.id.compareTo(b.id));
+              members.sort((a, b) => a.firstName.compareTo(b.firstName));
             }
             _isSortAsc = !_isSortAsc;
           });
         },
         label: const Text(
+          'First  name',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+      DataColumn(
+        onSort: (columnIndex, value) {
+          setState(() {
+            _currentSortIndex = columnIndex;
+            if (_isSortAsc) {
+              members.sort((a, b) => b.lastName.compareTo(a.lastName));
+            } else {
+              members.sort((a, b) => a.lastName.compareTo(b.lastName));
+            }
+            _isSortAsc = !_isSortAsc;
+          });
+        },
+        label: const Text(
+          'Lastname  name',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+      
+      DataColumn(
+        onSort: (columnIndex, value) {
+          setState(() {
+            _currentSortIndex = columnIndex;
+            if (_isSortAsc) {
+              members.sort((a, b) => b.email.compareTo(a.email));
+            } else {
+              members.sort((a, b) => a.email.compareTo(b.email));
+            }
+            _isSortAsc = !_isSortAsc;
+          });
+        },        label: const Text(
           'Email',
           style: TextStyle(color: Colors.white),
         ),
@@ -243,9 +306,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
           setState(() {
             _currentSortIndex = columnIndex;
             if (_isSortAsc) {
-              members.sort((a, b) => b.id.compareTo(a.id));
+              members.sort((a, b) => b.amount.compareTo(a.amount));
             } else {
-              members.sort((a, b) => a.id.compareTo(b.id));
+              members.sort((a, b) => a.amount.compareTo(b.amount));
             }
             _isSortAsc = !_isSortAsc;
           });
@@ -260,9 +323,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
           setState(() {
             _currentSortIndex = columnIndex;
             if (_isSortAsc) {
-              members.sort((a, b) => b.id.compareTo(a.id));
+              members.sort((a, b) => b.date.compareTo(a.date));
             } else {
-              members.sort((a, b) => a.id.compareTo(b.id));
+              members.sort((a, b) => a.date.compareTo(b.date));
             }
             _isSortAsc = !_isSortAsc;
           });
@@ -290,6 +353,8 @@ class _DataSource extends DataTableSource {
     final item = transactions[index];
     return DataRow(cells: [
       DataCell(Text(item.id.toString())),
+      DataCell(Text(item.firstName.toString())),
+      DataCell(Text(item.lastName.toString())),
       DataCell(Text(item.email.toString())),
       DataCell(Text(item.amount.toString())),
       DataCell(Text(item.date.toString()))

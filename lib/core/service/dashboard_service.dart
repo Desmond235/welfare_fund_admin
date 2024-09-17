@@ -15,6 +15,7 @@ class DashboardService {
       return TotalMembersModel.fromJson(jsonResponse);
     }
     else{
+      print(response.statusCode);
       return TotalMembersModel(totalMembers: 0);
     }
   }

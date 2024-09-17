@@ -95,6 +95,7 @@ class _SearchMembersScreenState extends State<SearchMembersScreen> {
           Padding(
             padding: const EdgeInsets.all(20),
             child: TextField(
+              autofocus: true,
               controller: _searchController,
               decoration: const InputDecoration(
                 labelText: 'Search',

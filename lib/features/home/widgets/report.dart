@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/features/form/models/membership_model.dart';
 import 'package:welfare_fund_admin/features/form/service/form_service.dart';
 
@@ -13,7 +15,8 @@ Future<List<MembershipModel>> fetchAllMembers() async {
   return members;
 }
 
-Future<void> generatePdfReportForMembers(List<MembershipModel> members) async {
+Future<void> generatePdfReportForMembers(
+    List<MembershipModel> members, BuildContext context) async {
   final pdf = pw.Document();
 
   final imageAsBytes = await rootBundle.load('assets/images/methodist.png');
@@ -33,7 +36,8 @@ Future<void> generatePdfReportForMembers(List<MembershipModel> members) async {
         return [
           pw.Text(
             'Members - Report',
-            style: pw.TextStyle(fontSize: 24, font: font, fontWeight: pw.FontWeight.bold),
+            style: pw.TextStyle(
+                fontSize: 24, font: font, fontWeight: pw.FontWeight.bold),
           ),
           pw.SizedBox(height: 10),
           pw.Text(
@@ -61,7 +65,6 @@ Future<void> generatePdfReportForMembers(List<MembershipModel> members) async {
               textAlign: pw.TextAlign.center),
           pw.SizedBox(height: 20),
           pw.TableHelper.fromTextArray(
-            
             context: context,
             headers: const [
               'Id',
@@ -102,11 +105,11 @@ Future<void> generatePdfReportForMembers(List<MembershipModel> members) async {
               fontWeight: pw.FontWeight.normal,
             ),
           ),
-         pw.SizedBox(height: 40),
+          pw.SizedBox(height: 40),
           pw.TableHelper.fromTextArray(
             context: context,
             headers: const [
-               'Occupation',
+              'Occupation',
               'Father\'s Name',
               'Father\'s Life Status',
               'Mother\'s Name',
@@ -114,10 +117,10 @@ Future<void> generatePdfReportForMembers(List<MembershipModel> members) async {
               'Next of Kin',
               'Class Leader',
             ],
-             headerStyle: pw.TextStyle(
+            headerStyle: pw.TextStyle(
                 font: font, fontWeight: pw.FontWeight.bold, fontSize: 17),
             data: [
-              ...members.map((member){
+              ...members.map((member) {
                 return [
                   member.occupation,
                   member.fathers_name,
@@ -163,13 +166,82 @@ Future<void> generatePdfReportForMembers(List<MembershipModel> members) async {
   // );
 
   //Save the report to the users device
-  final output = await getApplicationCacheDirectory();
+  final output = await getApplicationDocumentsDirectory();
   final file = File("${output.path}/report.pdf");
   await file.writeAsBytes(await pdf.save());
-
-  openFile(file.path);
+  if (await file.exists()) {
+    if (context.mounted) showDialogue(context, output, file);
+  }
 }
 
 void openFile(String filePath) {
   OpenFilex.open(filePath);
+}
+
+Future<void> downloading(BuildContext context) {
+  return showDialog(
+    context: context,
+    useSafeArea: true,
+    barrierDismissible: false,
+    builder: (context) {
+      return const AlertDialog(
+        content: Column(
+          children: [
+            Center(
+              child: CircularProgressIndicator(),
+            ),
+             SizedBox(height: 10),
+             Text('File is downloading...'),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+Future<void> showDialogue(BuildContext context, Directory report, File file) {
+  return showDialog(
+    context: context,
+    useSafeArea: true,
+    barrierDismissible: false,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Report'),
+        actionsAlignment: MainAxisAlignment.center,
+        content: Text(
+          'pdf saved to ${report.path} ',
+          style: const TextStyle(fontSize: 15),
+        ),
+        actions: [
+          OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.all(20),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text(
+              'Dismiss',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          const SizedBox(width: 5),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(20),
+                backgroundColor: priCol(context),
+                foregroundColor: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+              openFile(file.path);
+            },
+            child: const Text(
+              'Open File',
+              style: TextStyle(fontSize: 18),
+            ),
+          )
+        ],
+      );
+    },
+  );
 }

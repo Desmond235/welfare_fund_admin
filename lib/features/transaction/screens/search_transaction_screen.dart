@@ -93,6 +93,7 @@ class _SearchTransactionScreenState extends State<SearchTransactionScreen> {
           Padding(
             padding: const EdgeInsets.all(20),
             child: TextField(
+              autofocus: true,
               controller: _searchController,
               decoration: const InputDecoration(
                 labelText: 'Search',
@@ -125,6 +126,8 @@ class _SearchTransactionScreenState extends State<SearchTransactionScreen> {
                             source: _DataSource(transactions: _transactions),
                             columns: const [
                               DataColumn(label: Text('ID')),
+                              DataColumn(label: Text('First name')),
+                              DataColumn(label: Text('Last name')),
                               DataColumn(label: Text('Amount')),
                               DataColumn(label: Text('Email')),
                               DataColumn(label: Text('Date')),
@@ -153,6 +156,8 @@ class _DataSource extends DataTableSource {
     return DataRow(
       cells: [
         DataCell(Text(item.id.toString())),
+        DataCell(Text(item.firstName.toString())),
+        DataCell(Text(item.lastName.toString())),
         DataCell(Text(item.amount.toString())),
         DataCell(Text(item.email.toString())),
         DataCell(Text(item.date.toString())),
