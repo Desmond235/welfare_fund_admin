@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:http/retry.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
 // import 'package:provider/provider.dart';
@@ -355,7 +356,14 @@ class _TransactionScreenState extends State<TransactionScreen> {
 class _DataSource extends DataTableSource {
   final List<TransactionModel> transactions;
 
+
   _DataSource({required this.transactions});
+
+  String formatDate(String date){
+    String correctedDate = date.replaceFirst('-', 'T', date.lastIndexOf('-'));
+    DateTime parsedDate = DateTime.parse(correctedDate);
+    return DateFormat('MMM d, yyyy').format(parsedDate);
+  }
 
   @override
   DataRow? getRow(int index) {
@@ -364,13 +372,15 @@ class _DataSource extends DataTableSource {
     }
 
     final item = transactions[index];
+    String date = item.date.toString();
+
     return DataRow(cells: [
       DataCell(Text(item.id.toString())),
       DataCell(Text(item.firstName.toString())),
       DataCell(Text(item.lastName.toString())),
       DataCell(Text(item.email.toString())),
       DataCell(Text(item.amount.toString())),
-      DataCell(Text(item.date.toString()))
+      DataCell(Text(formatDate(date)))
     ]);
   }
 
