@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:welfare_fund_admin/core/controls/snackbar.dart';
 
 class VerifyOtpResponse {
   static post(String otp, BuildContext context) async {
@@ -14,17 +15,20 @@ class VerifyOtpResponse {
 
         body: {'otp': otp},
       );
+      if(!context.mounted) return;
       if(response.statusCode == 200){
         if(context.mounted){
           Navigator.of(context).pushReplacementNamed('password');
         }
-        print('otp verified successfully');
       }
       else{
-        print('opt is incorrect');
+        snackBar(context, 'Otp incorrect or expired');
       }
-    } on Exception catch (e) {
-      print('An error occurred while verifying otp');
+    } on Exception {
+      if(context.mounted){
+         return snackBar(context, 'An error occurred while verifying otp');
+      }
+     
     }
   }
 }

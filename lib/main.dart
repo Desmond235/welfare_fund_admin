@@ -8,7 +8,6 @@ import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/theme/dark_theme.dart';
 import 'package:welfare_fund_admin/features/auth/providers/sign_provider.dart';
 import 'package:welfare_fund_admin/features/auth/views/auth.dart';
-import 'package:welfare_fund_admin/features/auth/views/chang_password.dart';
 import 'package:welfare_fund_admin/features/settings/providers/theme_provider.dart';
 
 void main() async {

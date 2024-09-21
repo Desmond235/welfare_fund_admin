@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:welfare_fund_admin/core/base/main/main_page_provider.dart';
 import 'package:welfare_fund_admin/core/base/main/main_screen.dart';
 import 'package:welfare_fund_admin/core/constants/palette.dart';
-import 'package:welfare_fund_admin/core/service/verify_login.dart';
 import 'package:welfare_fund_admin/features/auth/providers/change_credentials_provider.dart';
 import 'package:welfare_fund_admin/features/auth/providers/sign_provider.dart';
 import 'package:welfare_fund_admin/features/auth/views/auth.dart';

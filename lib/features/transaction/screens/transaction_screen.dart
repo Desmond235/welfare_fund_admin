@@ -4,8 +4,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:lottie/lottie.dart';
-// import 'package:provider/provider.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/controls/snackbar.dart';
 import 'package:welfare_fund_admin/core/service/get_transaction.dart';
@@ -30,6 +28,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   late Future<List<TransactionModel>> loadMembership;
   final _formKey = GlobalKey<FormState>();
 
+  // ignore: unused_field
   int _currentPage = 1;
   int _rowSize = 10;
   DateTime? _selectedDate;

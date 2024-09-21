@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:welfare_fund_admin/core/constants/palette.dart';
-import 'package:welfare_fund_admin/features/auth/providers/sign_provider.dart';
 import 'package:welfare_fund_admin/features/settings/providers/theme_provider.dart';
 
 class SettingsCard extends StatelessWidget {

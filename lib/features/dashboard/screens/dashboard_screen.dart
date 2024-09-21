@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_charts/flutter_charts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
@@ -13,7 +11,6 @@ import 'package:welfare_fund_admin/features/dashboard/model/gender_model.dart';
 import 'package:welfare_fund_admin/features/dashboard/model/total_amount.dart';
 import 'package:welfare_fund_admin/features/dashboard/model/total_members_model.dart';
 import 'package:welfare_fund_admin/features/settings/providers/theme_provider.dart';
-import 'package:welfare_fund_admin/features/transaction/models/transaction_model.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});

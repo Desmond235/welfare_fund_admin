@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:icons_flutter/icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:welfare_fund_admin/core/base/main/main_page_provider.dart';
 import 'package:welfare_fund_admin/core/components/nav_item.dart';
