@@ -212,7 +212,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             ? 'No Males yet'
                                             : _gender![1].numberOfMales == 1
                                                 ? 'Male'
-                                                : '1Males',
+                                                : 'Males',
                                         style: const TextStyle(
                                             color: Colors.white, fontSize: 18),
                                       )
@@ -314,12 +314,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               child: Column(
                                 children: [
                                   Image.asset(
-                                    'assets/images/no_cash.png',
-                                    scale: 10,
+                                    'assets/images/no-data.png',
+                                    scale: 5,
                                   ),
+                                  const SizedBox(height: 10),
                                   Center(
                                     child: Text(
-                                        'No amount received for $_currentYear'),
+                                      'No amount received for $_currentYear',
+                                      style: const TextStyle(fontSize: 18),
+                                    ),
                                   ),
                                 ],
                               ),

@@ -32,11 +32,13 @@ class UpdateCredentialsResponse {
         return;
       }
       if (response.statusCode == 200) {
-        dialog(context);
-      }
-      if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
+        if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
         return snackBar(context, "username or password cannot be empty");
       }
+        dialog(context);
+        context.read<ChangeCredentialsProvider>().setIsChangeCredentials(true);
+      }
+      
     } on Exception catch (e) {
       snackBar(context, 'An error occurred: $e');
     }

@@ -6,12 +6,13 @@ import 'package:provider/provider.dart';
 import 'package:welfare_fund_admin/core/base/main/main_screen.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/theme/dark_theme.dart';
+import 'package:welfare_fund_admin/features/auth/providers/sign_provider.dart';
 import 'package:welfare_fund_admin/features/auth/views/auth.dart';
 import 'package:welfare_fund_admin/features/auth/views/chang_password.dart';
 import 'package:welfare_fund_admin/features/settings/providers/theme_provider.dart';
 
-void main() async{
-   WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -34,6 +35,9 @@ class MyApp extends StatelessWidget {
     final themeState = Provider.of<ThemeProvider>(context);
     themeState.getDarkTheme();
 
+    final signinState = context.watch<SignInProvider>();
+    signinState.getSigninState();
+
     return MaterialApp(
       scrollBehavior: MyCustomScrollBehavior(),
       darkTheme: darkMode,
@@ -45,12 +49,11 @@ class MyApp extends StatelessWidget {
       theme: Provider.of<ThemeProvider>(context).themeData,
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: const MainScreen(),
+      home: signinState.isSignin ? const MainScreen() : const AuthScreen(),
       routes: routes,
     );
   }
 }
-
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
   // Override behavior methods and getters like dragDevices

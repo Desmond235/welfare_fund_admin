@@ -107,9 +107,14 @@ class _SearchTransactionScreenState extends State<SearchTransactionScreen> {
                     child: CircularProgressIndicator(),
                   )
                 : _transactions.isEmpty
-                    ? const Center(
-                        child: Text('No results found'),
-                      )
+                    ? Column(
+                      children: [
+                        Image.asset('assets/images/PPC.png', scale: 6,),
+                        const Center(
+                            child: Text('No results found', style: TextStyle(fontSize: 18),),
+                          ),
+                      ],
+                    )
                     : SingleChildScrollView(
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),

@@ -188,7 +188,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             isSending: _isSending,
                             onTap: (){
                               login();
-                              credentialsState.setIsChangeCredentials(false);
+                              // credentialsState.setIsChangeCredentials(false);
                             },
                             isShadow: false,
                           )

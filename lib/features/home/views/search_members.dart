@@ -88,7 +88,7 @@ class _SearchMembersScreenState extends State<SearchMembersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search Transaction'),
+        title: const Text('Search Members'),
       ),
       body: Column(
         children: [
@@ -109,9 +109,14 @@ class _SearchMembersScreenState extends State<SearchMembersScreen> {
                     child: CircularProgressIndicator(),
                   )
                 : _members.isEmpty
-                    ? const Center(
-                        child: Text('No results found'),
-                      )
+                    ? Column(
+                      children: [
+                        Image.asset('assets/images/PPC.png', scale: 6,),
+                        const Center(
+                            child: Text('No results found', style: TextStyle(fontSize: 18),),
+                          ),
+                      ],
+                    )
                     : SingleChildScrollView(
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),

@@ -134,11 +134,11 @@ class _SettingsListItemState extends State<SettingsListItem> {
                         activeColor: Theme.of(context).colorScheme.primary,
                         onChanged: (value) {
                           ref.toggleThemeMode();
-                          if(ref.isDarkMode || ref.isDarkTheme){
-                            context.read<SignInProvider>().setSignIn(true);
-                          }else{
-                            context.read<SignInProvider>().setSignIn(false);
-                          }
+                          // if(ref.isDarkMode || ref.isDarkTheme){
+                          //   context.read<SignInProvider>().setSignIn(true);
+                          // }else{
+                          //   context.read<SignInProvider>().setSignIn(false);
+                          // }
                         },
                       )
                     : Icon(

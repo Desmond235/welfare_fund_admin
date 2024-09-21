@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:http/retry.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
 // import 'package:provider/provider.dart';
@@ -116,7 +115,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('assets/images/no_cash.png', scale: 10),
+                  Image.asset('assets/images/no-data.png', scale: 10),
                   const SizedBox(height: 10),
                   const Text(
                     'No Transactions made yet',
@@ -360,8 +359,9 @@ class _DataSource extends DataTableSource {
   _DataSource({required this.transactions});
 
   String formatDate(String date){
-    String correctedDate = date.replaceFirst('-', 'T', date.lastIndexOf('-'));
+    final correctedDate = date.replaceFirst('-', 'T', date.lastIndexOf('-'));
     DateTime parsedDate = DateTime.parse(correctedDate);
+
     return DateFormat('MMM d, yyyy').format(parsedDate);
   }
 
