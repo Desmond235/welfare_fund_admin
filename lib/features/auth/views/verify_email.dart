@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
+import 'package:welfare_fund_admin/core/controls/snackbar.dart';
+import 'package:welfare_fund_admin/core/service/send_otp.dart';
 import 'package:welfare_fund_admin/core/service/verify_otp.dart';
 
 class VerifyEmail extends StatefulWidget {
@@ -19,11 +21,20 @@ class _VerifyEmailState extends State<VerifyEmail> {
     super.dispose();
   }
 
-void verifyOtp( TextEditingController emailController){
-  
-  VerifyOtpResponse.post(otpController.text, context);
+  void resentOtp() async{
+    final prefs = await sharedPrefs;
+    final email = prefs.getString('email');
+    print(email);
+    if(!mounted) return ;
+    if(email != null){
+      SendOtpResponse.post(email, context);
+    }else{
+      snackBar(context, 'Email not found');
+    }
+  }
 
-  
+void verifyOtp( TextEditingController emailController){
+  VerifyOtpResponse.post(otpController.text, context);
 }
   
   @override
@@ -104,7 +115,7 @@ void verifyOtp( TextEditingController emailController){
                     ),
                     const SizedBox(width: 3),
                     InkWell(
-                      onTap: () {},
+                      onTap: resentOtp,
                       child: Text(
                         'Resend code',
                         style: TextStyle(

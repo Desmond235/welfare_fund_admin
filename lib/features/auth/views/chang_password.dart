@@ -14,7 +14,7 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangPasswordScreenState extends State<ChangePasswordScreen> {
-  bool showPassword = true;
+  bool showPassword = false;
   final passwordController = TextEditingController();
   final obscureTextController = ObscuringTextEditingController();
 

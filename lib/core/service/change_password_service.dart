@@ -47,6 +47,7 @@ Future<void> dialog(BuildContext context) {
       context: context,
       builder: (context) {
         return AlertDialog(
+          title: const Text('Change Password'),
           content: const Text('Credentials updated successfully'),
           actions: [
             TextButton(

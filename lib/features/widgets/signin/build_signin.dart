@@ -30,7 +30,7 @@ class SignInWidget extends StatefulWidget {
 }
 
 class _SignInWidgetState extends State<SignInWidget> {
-  bool showPassword = true;
+  bool showPassword = false;
   final obscureTextController = ObscuringTextEditingController();
 
   @override
@@ -162,7 +162,7 @@ class _SignInWidgetState extends State<SignInWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: (){Navigator.of(context).pushReplacementNamed('email');},
+                  onPressed: (){Navigator.of(context).pushNamed('email');},
                   child: const Text("Forgot Password?",
                       style:
                           TextStyle(fontSize: 12, color: Palette.textColor1)),
