@@ -4,8 +4,6 @@ import 'package:welfare_fund_admin/core/components/dialog_box.dart';
 import 'package:welfare_fund_admin/core/components/input_control.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/service/add_email_service.dart';
-import 'package:welfare_fund_admin/core/service/update_credentials.dart';
-import 'package:welfare_fund_admin/features/auth/widgets/text_input.dart';
 
 class AddEmail extends StatefulWidget {
   const AddEmail({super.key});
