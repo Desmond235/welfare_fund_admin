@@ -198,21 +198,45 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
-                                      Text(
-                                        _gender![1].numberOfMales.toString(),
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            fontSize: 30, color: Colors.white),
-                                      ),
-                                      Text(
-                                        _gender![1].numberOfMales == 0
-                                            ? 'No Males yet'
-                                            : _gender![1].numberOfMales == 1
-                                                ? 'Male'
-                                                : 'Males',
-                                        style: const TextStyle(
-                                            color: Colors.white, fontSize: 18),
-                                      )
+                                      ..._gender!.map((gender) {
+                                        return Column(
+                                          children: [
+                                            Text(
+                                              gender.numberOfMales.toString(),
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                  fontSize: 30,
+                                                  color: Colors.white),
+                                            ),
+                                            Text(
+                                              gender.numberOfMales == 0
+                                                  ? 'No Males yet'
+                                                  : gender.numberOfMales == 1
+                                                      ? 'Male'
+                                                      : 'Males',
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 18
+                                                      ),
+                                            )
+                                          ],
+                                        );
+                                      }),
+                                      // Text(
+                                      //   _gender![1].numberOfMales.toString(),
+                                      //   textAlign: TextAlign.center,
+                                      //   style: const TextStyle(
+                                      //       fontSize: 30, color: Colors.white),
+                                      // ),
+                                      // Text(
+                                      //   _gender![1].numberOfMales == 0
+                                      //       ? 'No Males yet'
+                                      //       : _gender![1].numberOfMales == 1
+                                      //           ? 'Male'
+                                      //           : 'Males',
+                                      //   style: const TextStyle(
+                                      //       color: Colors.white, fontSize: 18),
+                                      // )
                                     ],
                                   ),
                                 ),
@@ -236,19 +260,43 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
-                                      Text(
-                                        _gender![0].numberOfFemales.toString(),
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(fontSize: 30),
-                                      ),
-                                      Text(
-                                        _gender![0].numberOfFemales == 0
-                                            ? 'No females yet'
-                                            : _gender![0].numberOfFemales == 1
-                                                ? 'Female'
-                                                : 'Females',
-                                        style: const TextStyle(fontSize: 18),
-                                      )
+                                     ... _gender!.map((gender) {
+                                        return Column(
+                                          children: [
+                                            Text(
+                                              gender.numberOfFemales.toString(),
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                  fontSize: 30,
+                                                  color: Colors.white),
+                                            ),
+                                            Text(
+                                              gender.numberOfFemales == 0
+                                                  ? 'No Males yet'
+                                                  : gender.numberOfFemales == 1
+                                                      ? 'Female'
+                                                      : 'Females',
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 18
+                                                      ),
+                                            )
+                                          ],
+                                        );
+                                      }),
+                                      // Text(
+                                      //   _gender![0].numberOfFemales.toString(),
+                                      //   textAlign: TextAlign.center,
+                                      //   style: const TextStyle(fontSize: 30),
+                                      // ),
+                                      // Text(
+                                      //   _gender![0].numberOfFemales == 0
+                                      //       ? 'No females yet'
+                                      //       : _gender![0].numberOfFemales == 1
+                                      //           ? 'Female'
+                                      //           : 'Females',
+                                      //   style: const TextStyle(fontSize: 18),
+                                      // )
                                     ],
                                   ),
                                 ),
