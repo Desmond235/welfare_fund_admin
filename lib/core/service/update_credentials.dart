@@ -55,7 +55,7 @@ Future<void> dialog(BuildContext context) {
             TextButton(
               onPressed: () {
                 Navigator.of(context)
-                    .pushNamedAndRemoveUntil('main', (_) => false);
+                    .pushNamedAndRemoveUntil('addEmail', (_) => false);
                 Provider.of<ChangeCredentialsProvider>(context, listen: false)
                     .setIsChangeCredentials(true);
               },

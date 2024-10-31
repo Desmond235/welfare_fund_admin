@@ -9,6 +9,7 @@ import 'package:welfare_fund_admin/core/base/main/main_screen.dart';
 import 'package:welfare_fund_admin/core/constants/palette.dart';
 import 'package:welfare_fund_admin/features/auth/providers/change_credentials_provider.dart';
 import 'package:welfare_fund_admin/features/auth/providers/sign_provider.dart';
+import 'package:welfare_fund_admin/features/auth/views/add_email.dart';
 import 'package:welfare_fund_admin/features/auth/views/auth.dart';
 import 'package:welfare_fund_admin/features/auth/views/chang_password.dart';
 import 'package:welfare_fund_admin/features/auth/views/change_credentials.dart';
@@ -78,6 +79,7 @@ Map<String, Widget Function(BuildContext)> routes = {
   'email':(context) => const EmailScreen(),
   'password': (context) => const ChangePasswordScreen(),
   'auth': (context) => const AuthScreen(),
+  'addEmail': (context) => const AddEmail(),
   
 };
 
