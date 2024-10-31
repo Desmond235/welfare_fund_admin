@@ -21,11 +21,9 @@ class SendOtpResponse {
       }
       if(response.statusCode == 200){
         Navigator.of(context).pushNamed('otp');
-        print('otp sent successfully');
       }
       else{
-        snackBar(context, 'Could not send otp, please try again later ');
-        print('Could not sent otp');
+        snackBar(context, 'Could not send otp, please check your internet connection ');
       }
     } on Exception catch (e) {
       print('An error occurred while sending otp: $e');

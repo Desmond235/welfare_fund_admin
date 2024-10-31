@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:welfare_fund_admin/core/components/input_control.dart';
 import 'package:welfare_fund_admin/core/constants/constants.dart';
+import 'package:welfare_fund_admin/core/service/check_email_service.dart';
 import 'package:welfare_fund_admin/core/service/send_otp.dart';
 
 class EmailScreen extends StatefulWidget {
@@ -15,6 +16,10 @@ class _EmailScreenState extends State<EmailScreen> {
 
   void sendOtp(){
     SendOtpResponse.post(emailController.text, context);
+  }
+
+  void checkEmail() async{
+    CheckEmailService.post(emailController.text.trim(), context);
   }
 
    @override
@@ -49,7 +54,7 @@ class _EmailScreenState extends State<EmailScreen> {
               ),
               const SizedBox(height: 30),
               InkWell(
-                  onTap: sendOtp,
+                  onTap: checkEmail,
                   borderRadius: BorderRadius.circular(35),
                   child: Container(
                     width: double.infinity,

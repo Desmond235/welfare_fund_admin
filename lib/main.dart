@@ -8,7 +8,6 @@ import 'package:welfare_fund_admin/core/constants/constants.dart';
 import 'package:welfare_fund_admin/core/theme/dark_theme.dart';
 import 'package:welfare_fund_admin/features/auth/providers/sign_provider.dart';
 import 'package:welfare_fund_admin/features/auth/views/auth.dart';
-import 'package:welfare_fund_admin/features/auth/views/change_credentials.dart';
 import 'package:welfare_fund_admin/features/settings/providers/theme_provider.dart';
 
 void main() async {
@@ -49,8 +48,7 @@ class MyApp extends StatelessWidget {
       theme: Provider.of<ThemeProvider>(context).themeData,
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: const ChangeCredentials(),
-      // home: signinState.isSignin ? const MainScreen() : const AuthScreen(),
+      home: signinState.isSignin ? const MainScreen() : const AuthScreen(),
       routes: routes,
     );
   }
